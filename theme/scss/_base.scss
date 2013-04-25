@@ -102,6 +102,16 @@ slides > slide {
   @include box-sizing(border-box);
 }
 
+dt {
+  display: inline-block;
+  vertical-align: top;
+  width: 20%;
+}
+dd {
+  display: inline-block;
+  width: 75%;
+}
+
 /* Slide styles */
 
 

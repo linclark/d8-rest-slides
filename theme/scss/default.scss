@@ -415,6 +415,11 @@ iframe {
   @include box-sizing(border-box);
 }
 
+iframe.twitter-tweet {
+  height: 200px;
+  width: 500px;
+}
+
 dt {
   font-weight: bold;
 }
