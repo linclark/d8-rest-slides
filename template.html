@@ -41,6 +41,27 @@ URL: https://code.google.com/p/io-2012-slides
     </hgroup>
   </slide>
 
+  <slide>
+    <hgroup>
+      <h2>What are we trying to do?</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Programmatically getting stuff into and out of Drupal</li>
+        <li>Drupal acts as a web service interface provider</li>
+        <li>Data is exchanged in a machine-readable format</li>
+        <li>Use cases:
+        <ul>
+          <li>A mobile phone app retrieves recent news nodes</li>
+          <li>On-site Javascript creates taxonomy terms from user input</li>
+          <li>Deploying staging content entities to the production site</li>
+          <li>A public REST API that allows clients to place commerce orders</li>
+          <li>A private REST API to migrate third party data into Drupal</li>
+        </ul>
+        </li>
+    </article>
+  </slide>
+
   <!-- Introducing Terms -->
   <slide>
     <section>
@@ -54,8 +75,6 @@ URL: https://code.google.com/p/io-2012-slides
     </section>
   </slide>
 
-  <!-- Comparision to Services -->
-
   <slide>
     <hgroup>
       <h2>Endpoints</h2>
@@ -65,6 +84,51 @@ URL: https://code.google.com/p/io-2012-slides
       <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
     </section>
   </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Modules in Drupal 7 contrib</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Services</li>
+        <li>RESTWS</li>
+        <li>Services Entity API</li>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Modules in Drupal 8 core</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>RESTful Web Services (REST module)</li>
+        <li>Serialization module</li>
+        <li>HAL module</li>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Resources and Operations</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>A resource is the object of interest. Example: the node resource</li>
+        <li>An operation is an action to read or manipulate a resource.
+          <ul>
+            <li>Create: HTTP POST /entity/node</li>
+            <li>Read: HTTP GET /entity/node/1</li>
+            <li>Update: HTTP PATCH /entity/node/1</li>
+            <li>Update: HTTP DELETE /entity/node/1</li>
+          </ul>
+        </li>
+      </ul>
+    </article>
+  </slide>
+
+  <!-- Comparision to Services -->
 
   <slide>
     <hgroup>
