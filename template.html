@@ -47,16 +47,17 @@ URL: https://code.google.com/p/io-2012-slides
     </hgroup>
     <article>
       <ul>
-        <li>Programmatically getting stuff into and out of Drupal</li>
+        <li><b>Programmatically</b> getting stuff into and out of Drupal</li>
         <li>Drupal acts as a web service interface provider</li>
-        <li>Data is exchanged in a machine-readable format</li>
+        <li>Data is exchanged in a <b>machine-readable format</b></li>
         <li>Use cases:
         <ul>
-          <li>A mobile phone app retrieves recent news nodes</li>
-          <li>On-site Javascript creates taxonomy terms from user input</li>
-          <li>Deploying staging content entities to the production site</li>
-          <li>A public REST API that allows clients to place commerce orders</li>
-          <li>A private REST API to migrate third party data into Drupal</li>
+          <li>A <b>mobile phone app</b> retrieves recent news nodes</li>
+          <li><b>On-site Javascript</b> creates taxonomy terms from user input</li>
+          <li><b>Deploying staging content</b> entities to the production site</li>
+          <li>A public <b>REST API</b> that allows clients to place commerce orders</li>
+          <li>A private REST API to <b>migrate</b> third party data into Drupal</li>
+          <li>Connecting Drupal to external systems</li>
         </ul>
         </li>
     </article>
@@ -125,6 +126,115 @@ URL: https://code.google.com/p/io-2012-slides
           </ul>
         </li>
       </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Resource plugins</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Separation of data handling and serialization</li>
+        <li>One entity plugin with derivatives for all entity types</li>
+        <li>Contributed modules can easily override/extend/provide plugins</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Dblog resource plugin example</h2>
+    </hgroup>
+    <article>
+      <p>GET http://example.com/dblog/1</p>
+      <pre class="prettyprint" data-lang="php">
+/**
+ * @Plugin(id = "dblog")
+ */
+class DBLogResource extends ResourceBase {
+  public function get($id = NULL) {
+    if ($id) {
+      $record = db_query("SELECT * FROM {watchdog} WHERE wid = :wid",
+        array(':wid' => $id))
+        ->fetchAssoc();
+      if (!empty($record)) {
+        return new ResourceResponse($record);
+      }
+}}}
+      </pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Request method mapping example</h2>
+    </hgroup>
+    <article>
+      <p><span class="mark">GET</span> http://example.com/dblog/1</p>
+      <pre class="prettyprint" data-lang="php">
+/**
+ * @Plugin(id = "dblog")
+ */
+class DBLogResource extends ResourceBase {
+  public function <span class="mark">get</span>($id = NULL) {
+    if ($id) {
+      $record = db_query("SELECT * FROM {watchdog} WHERE wid = :wid",
+        array(':wid' => $id))
+        ->fetchAssoc();
+      if (!empty($record)) {
+        return new ResourceResponse($record);
+      }
+}}}
+      </pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Plugin mapping example</h2>
+    </hgroup>
+    <article>
+      <p>GET http://example.com/<span class="mark">dblog</span>/1</p>
+      <pre class="prettyprint" data-lang="php">
+/**
+ * @Plugin(id = "<span class="mark">dblog</span>")
+ */
+class DBLogResource extends ResourceBase {
+  public function get($id = NULL) {
+    if ($id) {
+      $record = db_query("SELECT * FROM {watchdog} WHERE wid = :wid",
+        array(':wid' => $id))
+        ->fetchAssoc();
+      if (!empty($record)) {
+        return new ResourceResponse($record);
+      }
+}}}
+      </pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>ID mapping example</h2>
+    </hgroup>
+    <article>
+      <p>GET http://example.com/dblog/<span class="mark">1</span></p>
+      <pre class="prettyprint" data-lang="php">
+/**
+ * @Plugin(id = "dblog")
+ */
+class DBLogResource extends ResourceBase {
+  public function get(<span class="mark">$id</span> = NULL) {
+    if ($id) {
+      $record = db_query("SELECT * FROM {watchdog} WHERE wid = :wid",
+        array(':wid' => <span class="mark">$id</span>))
+        ->fetchAssoc();
+      if (!empty($record)) {
+        return new ResourceResponse($record);
+      }
+}}}
+      </pre>
     </article>
   </slide>
 
