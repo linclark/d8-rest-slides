@@ -238,6 +238,59 @@ class DBLogResource extends ResourceBase {
     </article>
   </slide>
 
+  <slide>
+    <hgroup>
+      <h2>Dblog response HAL example</h2>
+    </hgroup>
+    <article>
+      <p>GET http://example.com/dblog/1 Accept: application/hal+json</p>
+      <pre class="prettyprint" data-lang="json">
+{
+  "wid": "1",
+  "uid": "0",
+  "type": "system",
+  "message": "%module module installed.",
+  "variables": "a:1:{s:7:\"%module\";s:5:\"dblog\";}",
+  "severity": "6",
+  "link": "",
+  "location": "http://drupal-8.localhost/core/install.php?langcode=en&profile=standard&id=1&op=do_nojs&op=do",
+  "referer": "http://drupal-8.localhost/core/install.php?langcode=en&profile=standard&op=start&id=1",
+  "hostname": "127.0.0.1",
+  "timestamp": "1367615996"
+}
+      </pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Dblog response XML example</h2>
+    </hgroup>
+    <article>
+      <p>GET http://example.com/dblog/1 Accept: application/xml</p>
+      <pre class="prettyprint" data-lang="xml">
+&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;response&gt;
+  &lt;wid&gt;1&lt;/wid&gt;
+  &lt;uid&gt;0&lt;/uid&gt;
+  &lt;type&gt;system&lt;/type&gt;
+  &lt;message&gt;%module module installed.&lt;/message&gt;
+  &lt;variables&gt;a:1:{s:7:&quot;%module&quot;;s:5:&quot;dblog&quot;;}&lt;/variables&gt;
+  &lt;severity&gt;6&lt;/severity&gt;
+  &lt;link&gt;&lt;/link&gt;
+  &lt;location&gt;
+  &lt;![CDATA[http://drupal-8.localhost/core/install.php?langcode=en&amp;profile=standard&amp;id=1&amp;op=do_nojs&amp;op=do]]&gt;
+  &lt;/location&gt;
+  &lt;referer&gt;
+  &lt;![CDATA[http://drupal-8.localhost/core/install.php?langcode=en&amp;profile=standard&amp;op=start&amp;id=1]]&gt;
+  &lt;/referer&gt;
+  &lt;hostname&gt;127.0.0.1&lt;/hostname&gt;
+  &lt;timestamp&gt;1367615996&lt;/timestamp&gt;
+&lt;/response&gt;
+      </pre>
+    </article>
+  </slide>
+
   <!-- Comparision to Services -->
 
   <slide>
