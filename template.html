@@ -291,6 +291,37 @@ class DBLogResource extends ResourceBase {
     </article>
   </slide>
 
+  <slide>
+    <hgroup>
+      <h2>Entity resource plugins</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>New Entity API with field metadata</li>
+        <li>We know all properties and fields an entity has</li>
+        <li>REST API support can be enabled for any entity known to the system</li>
+        <li>One derivative plugin for each entity type</li>
+        <li>Access control on the entity level</li>
+        <li>Access control on the field level</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Authentication, Authorization and access control</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Authentication is not handled by REST module</li>
+        <li>The global user object has to be populated when the request is received</li>
+        <li>Standard Drupal session cookie authentication in core</li>
+        <li>Extra user permissions to authorize web service operations</li>
+        <li>Additional access control in the plugin itself (example: entity and field access in the entiy plugin)</li>
+      </ul>
+    </article>
+  </slide>
+
   <!-- Comparision to Services -->
 
   <slide>
