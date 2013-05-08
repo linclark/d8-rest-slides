@@ -20,11 +20,10 @@ var SLIDE_CONFIG = {
   // Author information
   presenters: [{
     name: 'Lin Clark',
-    company: 'Job Title, Google',
-    gplus: 'http://plus.google.com/1234567890',
-    twitter: '@yourhandle',
-    www: 'http://www.you.com',
-    github: 'http://github.com/you'
+    company: 'Independent developer',
+    twitter: '@linclark',
+    www: 'http://lin-clark.com',
+    github: 'http://github.com/linclark'
   }, {
     name: 'Klaus Purer',
     company: 'Developer, epiqo.com',
