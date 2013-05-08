@@ -105,6 +105,56 @@ URL: https://code.google.com/p/io-2012-slides
 
   <slide>
     <hgroup>
+      <h2>URI</h2>
+    </hgroup>
+    <article>
+      <h1>Resource</h1>
+      <ul>
+        <li>http://example.com/entity/node/1</li>
+        <li>http://example.com/node/1</li>
+        <li>http://example.com/user/1</li>
+      </ul>
+      <h1>Link Relation</h1>
+      <ul>
+        <li>http://example.com/node/article/field_tags</li>
+        <li>http://drupal.org/rest/relations/field-configuration</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>HTTP method</h2>
+    </hgroup>
+    <article>
+      <dl class="build">
+        <dt>GET</dt>
+        <dd>Go fetch this page and bring it back to me. Don't change it.</dd>
+        <dt>POST</dt>
+        <dd>Here's some data, go make a thing for me.</dd>
+        <dt>PATCH</dt>
+        <dd>Here are some changed fields, go update them on the existing thing.</dd>
+        <dt>DELETE</dt>
+        <dd>Kill it.</dd>
+      </dl>
+    </article>
+  </slide>
+
+  <slide>
+  <hgroup>
+    <h2>Media Type</h2>
+  </hgroup>
+    <article>
+      <ul class="build">
+        <li>application/json</li>
+        <li>application/hal+json</li>
+        <li>application/vnd.github+json</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
       <h2>Endpoints</h2>
     </hgroup>
     <section class="flexbox vcenter">
