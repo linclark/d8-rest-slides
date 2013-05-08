@@ -64,6 +64,47 @@ URL: https://code.google.com/p/io-2012-slides
 
   <slide>
     <hgroup>
+      <h2>4 components of the REST request</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Base Format</li>
+        <li>URI</li>
+        <li>HTTP Verbs</li>
+        <li>Media Type (aka MIME type)</li>
+      </ul>
+      <footer class="source">based on: Pro PHP XML and Web Services, Chapter 17</footer>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Base Format</h2>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="json">
+{
+  "name": "Larry Garfield",
+  "role": {
+    "name": "Initiative Owner",
+    "project": "WSSCI"
+  }
+}
+      </pre>
+      <pre class="prettyprint" data-lang="xml">
+&lt;contributor&gt;
+  &lt;name&gt;Larry Garfield&lt;/name&gt;
+  &lt;role&gt;
+    &lt;name&gt;Initiative Owner&lt;/name&gt;
+    &lt;project&gt;WSCCI&lt;/project&gt;
+  &lt;/role&gt;
+&lt;/contributor&gt;
+      </pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
       <h2>Endpoints</h2>
     </hgroup>
     <section class="flexbox vcenter">
