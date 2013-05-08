@@ -347,15 +347,17 @@ ul {
     }
   }
 
+  ul {
+    margin-top: .5em;
+  }
+}
+
+ul:not(.no-bullet) {
   > li:before {
     content: '\00B7';
     margin-left: -1em;
     position: absolute;
     font-weight: 600;
-  }
-
-  ul {
-    margin-top: .5em;
   }
 }
 
@@ -1089,4 +1091,21 @@ aside.gdbar {
 
 span.mark {
   border: 3px solid red;
+}
+
+.image-annotation {
+  background: white;
+  border: #a9a9a9 solid 1px;
+  border-radius: 10px;
+  float: right;
+  padding: 20px;
+  width: 45%;
+
+  dt {
+    width: 45%;
+  }
+
+  dd {
+    width: 40%;
+  }
 }
