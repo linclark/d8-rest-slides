@@ -63,7 +63,7 @@ URL: https://code.google.com/p/io-2012-slides
   <slide>
     <section>
       <video src="videos/get-post.mp4" width="100%" style="position: absolute; left: 0px; top:0px;" controls preload="auto">
-        <p>Your browser doesn't support HTML5 video.</p>
+        <p>Your browser doesn't support HTML5 video. <a href="videos/get-post.mp4">Download the video</a>.</p>
       </video>
     </section>
   </slide>
@@ -285,6 +285,7 @@ URL: https://code.google.com/p/io-2012-slides
     <article>
       <ul>
         <li>Separation of data handling and serialization</li>
+        <li>Classes where specially named methods correspond to HTTP methods</li>
         <li>One entity plugin with derivatives for all entity types</li>
         <li>Contributed modules can easily override/extend/provide plugins</li>
       </ul>
@@ -467,6 +468,54 @@ class DBLogResource extends ResourceBase {
         <li>Standard Drupal session cookie authentication in core</li>
         <li>Extra user permissions to authorize web service operations</li>
         <li>Additional access control in the plugin itself (example: entity and field access in the entiy plugin)</li>
+      </ul>
+    </article>
+  </slide>
+
+  <!-- Demonstrations -->
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"></aside>
+    <hgroup class="auto-fadein">
+      <h2>Demonstrations</h2>
+      <h3>Now configure this for real</h3>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Enabling modules</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Drupal 8 installation
+        <pre>drush si --account-name=klausi --account-pass=secret --site-name=drupal-8.localhost</pre></li>
+        <li>Serialization module (serialization)</li>
+        <li>RESTful Web Services module (rest)</li>
+        <li>HAL (Hypertext Application Language) module (hal)</li>
+        <li><pre>drush en rest hal --yes</pre></li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Enabling the node resource</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Copy <b>rest.settings.yml</b> to the config staging directory</li>
+        <li><pre>cp sites/default/files/config_SNJe.../active/rest.settings.yml \
+sites/default/files/config_SNJe.../staging/rest.settings.yml</pre></li>
+        <li>Edit rest.settings.yml in the config staging directory</li>
+        <li><pre class="prettyprint" data-lang="yaml">
+resources:
+  'entity:node':        # We just enable the node resource, nothing else.
+    GET:                # Enable HTTP GET requests.
+      hal_json: 'TRUE'  # Only the HAL serialization format is enabled.</pre></li>
+        <li>Import the configuration in the UI at /admin/config/development/sync</li>
+        <li><pre>drush config-import --yes</pre></li>
+        <li>Clear caches in the UI at /admin/config/development/performance</li>
+        <li><pre>drush cc all</pre></li>
       </ul>
     </article>
   </slide>
