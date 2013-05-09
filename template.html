@@ -520,6 +520,54 @@ resources:
     </article>
   </slide>
 
+  <slide>
+    <hgroup>
+      <h2>Configure permissions and add a node</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Go to /admin/people/permissions#module-rest and grant "Access GET on Content resource" to the anonymous user role.</li>
+        <li>Note: node and field access still applies on top of that.</li>
+        <li><pre>drush role-add-perm anonymous 'restful get entity:node'</pre></li>
+        <li>Create a node at /node/add/page</li>
+        <li><pre>git clone --branch 8.x-1.x http://git.drupal.org/project/devel.git modules/devel
+drush en devel_generate --yes
+drush generate-content --types=page 1</pre></li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Fetch the node with cURL</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>With cURL from the command line</li>
+        <li><pre>curl -H "Accept: application/hal+json" --request GET \
+http://drupal-8.localhost/entity/node/1</pre></li>
+        <li>With cURL from PHP</li>
+        <li><pre class="prettyprint" data-lang="php">
+$ch = curl_init();
+curl_setopt_array($ch, array(
+  CURLOPT_URL => 'http://drupal-8.localhost/entity/node/1',
+  CURLOPT_HTTPHEADER => array('Accept: application/hal+json'),
+  CURLOPT_RETURNTRANSFER => TRUE,
+));
+$response = json_decode(curl_exec($ch));
+print_r($response);</pre></li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Fetch the node with Guzzle</h2>
+    </hgroup>
+    <article>
+    </article>
+  </slide>
+
   <!-- Comparision to Services -->
   <!--<slide>
     <hgroup>
