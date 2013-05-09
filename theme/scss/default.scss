@@ -50,7 +50,14 @@ $article-content-top-padding: 45px;
   background-color: white;
 }
 
-
+@mixin callout-box {
+  @include border-radius(10px, 10px);
+  background-color: white;
+  border: #a9a9a9 solid 1px;
+  margin-bottom: 20px;
+  padding: 20px;
+  width: 45%;
+}
 
 /**
  * Theme Styles
@@ -1094,12 +1101,8 @@ span.mark {
 }
 
 .image-annotation {
-  background: white;
-  border: #a9a9a9 solid 1px;
-  border-radius: 10px;
+  @include callout-box;
   float: right;
-  padding: 20px;
-  width: 45%;
 
   dt {
     width: 45%;
@@ -1108,4 +1111,8 @@ span.mark {
   dd {
     width: 40%;
   }
+}
+
+div.normalizer {
+  @include callout-box;
 }
