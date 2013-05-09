@@ -476,7 +476,7 @@ class DBLogResource extends ResourceBase {
   <slide class="segue dark nobackground">
     <aside class="gdbar"></aside>
     <hgroup class="auto-fadein">
-      <h2>Demonstrations</h2>
+      <h2>GET Demonstration</h2>
       <h3>Now configure this for real</h3>
     </hgroup>
   </slide>
@@ -571,7 +571,7 @@ print_r($response);</pre></li>
 use Guzzle\Http\Client;
 
 $client = new Client('http://drupal-8.localhost');
-// If in a Drupal environment you should use HTTP client service.
+// If in a Drupal environment use the HTTP client service.
 $client = Drupal::httpClient()->setBaseUrl('http://drupal-8.localhost');
 
 $request = $client->get('entity/node/1');
@@ -605,6 +605,58 @@ Array(
       [format] => restricted_html
       [summary] =>
 )))</pre>
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"></aside>
+    <hgroup class="auto-fadein">
+      <h2>POST Demonstration</h2>
+      <h3>Writing new nodes</h3>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Enable POST configuration</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Edit rest.settings.yml in the config staging directory and import it as usual:</li>
+        <li><pre class="prettyprint" data-lang="yaml">
+resources:
+  'entity:node':
+    GET:
+      hal_json: 'TRUE'
+    POST:
+      hal_json: 'TRUE'</pre></li>
+        <li>Grant the "Access POST on Content resource" to the administrator user role.</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Obtaining a session with Guzzle</h2>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="php">
+use Guzzle\Http\Client;
+use Guzzle\Plugin\Cookie\CookiePlugin;
+use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
+
+$cookiePlugin = new CookiePlugin(new ArrayCookieJar());
+
+$client = new Client('http://drupal-8.localhost');
+$client->addSubscriber($cookiePlugin);
+$client->post('user', null, array(
+  'name' => 'klausi',
+  'pass' => 'secret',
+  'form_id' => 'user_login_form',
+))->send();
+// $client holds a session cookie now. All future $client requests
+// will send the cookie along
+</pre>
     </article>
   </slide>
 
