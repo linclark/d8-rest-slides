@@ -800,6 +800,26 @@ $client->post('entity/node', array(
 
   <slide>
     <hgroup>
+      <h2>Normalizers</h2>
+      <h3>Chain of responsibility</h3>
+    </hgroup>
+    <article class="smaller">
+      <div class="normalizer">
+        EntityReferenceItemNormalizer
+      </div>
+      <div class="normalizer">
+        FieldItemNormalizer
+      </div>
+      <div class="normalizer">
+        FieldNormalizer
+      </div>
+      <div class="normalizer">
+        EntityNormalizer
+      </div>
+    </article>
+  </slide>
+  <slide>
+    <hgroup>
       <h2>Slide with Bullets that Build</h2>
       <h3>Subtitle Placeholder</h3>
     </hgroup>
