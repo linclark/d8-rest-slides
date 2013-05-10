@@ -856,34 +856,43 @@ class DBLogResource extends ResourceBase {
     <hgroup>
       <h2>Making a doctor's appointment via API</h2>
     </hgroup>
-    <article>
-      <div>Get a list of open appointments</div>
-      <pre class="prettyprint" data-lang="http">
-GET /doctors/mjones/slots?date=20100104&status=open HTTP/1.1
+    <article class="api-walkthrough">
+      <section>
+        <img src="images/upcoming-appts.png" alt="iPhone app with upcoming appointments button." />
+      </section>
+      <section>
+        <div>Get a list of open slots in the schedule</div>
+        <pre class="prettyprint" data-lang="http">
+GET /doctors/slots HTTP/1.1
 Host: foo-hospital.com</pre>
+      </section>
     </article>
     <footer class="source">based on: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
   </slide>
 
   <slide>
-    <article>
-      <div>Server returns list of open appointments</div>
-<pre class="prettyprint" data-lang="http">
-HTTP/1.1 200 OK
-</pre>
-<pre class="prettyprint" data-lang="xml">
-&lt;openSlotList&gt;
-    &lt;slot id = "1234" doctor = "mjones" start = "1400" end = "1450"&gt;
-        &lt;link rel = "/rels/slot/book"
-              uri = "/slots/1234"/&gt;
-    &lt;/slot&gt;
-    &lt;slot id = "5678" doctor = "mjones" start = "1600" end = "1650"&gt;
-        &lt;link rel = "/rels/slot/book"
-              uri = "/slots/5678"/&gt;
-    &lt;/slot&gt;
-&lt;/openSlotList&gt;
-      </pre>
-      <div>Client chooses the appointment, gets the booking URI</div>
+    <article class="api-walkthrough">
+      <section>
+        <img src="images/list-appts.png" alt="iPhone app with list of appointments." />
+      </section>
+      <section>
+        <div>Server returns list of open appointments</div>
+  <pre class="prettyprint" data-lang="http">
+HTTP/1.1 200 OK</pre>
+  <pre class="prettyprint" data-lang="xml">
+  &lt;openSlotList&gt;
+      &lt;slot id="1234" doctor="jdoe" start="1400" end="1450"&gt;
+          &lt;link rel="/rels/slot/book"
+                uri="/slots/1234"/&gt;
+      &lt;/slot&gt;
+      &lt;slot id="5678" doctor="jdoe" start="1600" end="1650"&gt;
+          &lt;link rel="/rels/slot/book"
+                uri="/slots/5678"/&gt;
+      &lt;/slot&gt;
+  &lt;/openSlotList&gt;
+        </pre>
+        <div>Client chooses the appointment and gets the booking URI</div>
+      </section>
     </article>
     <footer class="source">based on: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
   </slide>
@@ -902,17 +911,18 @@ POST /slots/1234 HTTP/1.1
   </slide>
 
   <slide>
-    <div>Server returns confirmation and links that tell the client what it can do next</div>
+    <div>Server returns confirmation</div>
 <pre class="prettyprint" data-lang="http">
 HTTP/1.1 201 Created
 Location: http://foo-hospital.com/slots/1234/appointment
 </pre>
+    <div>...and links that tell the client what it can do next</div>
 <pre class="prettyprint" data-lang="xml">
 &lt;appointment&gt;
-    &lt;slot id="1234" doctor="mjones" start="1400" end="1450"/&gt;
+    &lt;slot id="1234" doctor="jdoe" start="1400" end="1450"/&gt;
     &lt;patient id="linclark"/&gt;
-    &lt;link rel = "/rels/appointment/updateContactInfo"
-        uri = "/patients/linclark/contactInfo"/&gt;
+    &lt;link rel="/rels/appointment/updateContactInfo"
+        uri="/patients/linclark/contactInfo"/&gt;
     &lt;link rel="/rels/appointment/cancel"
         uri="/slots/1234/appointment"/&gt;
     ...
@@ -937,18 +947,32 @@ Location: http://foo-hospital.com/slots/1234/appointment
     <hgroup>
       <h2>Decoupling</h2>
     </hgroup>
+    <article>
+    <div>How do you get the URI for canceling an appointment?</div>
+    <div>You can figure out the URI pattern and hard code the logic for constructing the URI in your app...</div>
 <pre class="prettyprint" data-lang="php">
-$cancel_url = $base . '/slots/' . $id . '/appointment';
+$cancel_url = $base . '/slots/' . $appt['id'] . '/appointment';
 </pre>
+    <div>but what if the server changes its URI structure?</div>
+    <div>Instead, get the URI from the links.</div>
 <pre class="prettyprint" data-lang="php">
-$cancel_url = $appointment['cancel']['uri'];
+$cancel_url = $appt['cancel']['uri'];
 </pre>
+    </article>
   </slide>
 
   <slide>
     <hgroup>
       <h2>Discoverability</h2>
     </hgroup>
+    <article>
+      <ul>
+        <li>/rels/appointment/updateContactInfo</li>
+        <li>/rels/appointment/cancel</li>
+        <li>/rels/appointment/addSymptom</li>
+        <li>/rels/appointment/medicalHistory</li>
+      </ul>
+    </article>
   </slide>
 
   <slide style="background-image: url(images/zork_map_1.jpg); background-size: 100%" >
