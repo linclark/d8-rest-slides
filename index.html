@@ -866,8 +866,8 @@ class DBLogResource extends ResourceBase {
 GET /doctors/slots HTTP/1.1
 Host: foo-hospital.com</pre>
       </section>
+      <footer class="source">based on: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
     </article>
-    <footer class="source">based on: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
   </slide>
 
   <slide>
@@ -879,56 +879,80 @@ Host: foo-hospital.com</pre>
         <div>Server returns list of open appointments</div>
   <pre class="prettyprint" data-lang="http">
 HTTP/1.1 200 OK</pre>
-  <pre class="prettyprint" data-lang="xml">
-  &lt;openSlotList&gt;
-      &lt;slot id="1234" doctor="jdoe" start="1400" end="1450"&gt;
-          &lt;link rel="/rels/slot/book"
-                uri="/slots/1234"/&gt;
-      &lt;/slot&gt;
-      &lt;slot id="5678" doctor="jdoe" start="1600" end="1650"&gt;
-          &lt;link rel="/rels/slot/book"
-                uri="/slots/5678"/&gt;
-      &lt;/slot&gt;
-  &lt;/openSlotList&gt;
-        </pre>
-        <div>Client chooses the appointment and gets the booking URI</div>
+  <pre class="prettyprint" data-lang="json">
+{
+  ...
+  "_embedded": {
+    "/rels/open-slots": [
+      {
+        "_links": {
+          "self": { "href": "/slots/97" },
+          "/rels/book": { "href": "/slots/97"}
+        }
+        "id": 97,
+        "doctor": "Dr. Doe",
+        "start": 2013-05-23T16:00:00,
+        "end": 2013-05-23T16:50:00
+      },
+      ...
+    ]
+  }
+}</pre>
       </section>
     </article>
-    <footer class="source">based on: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
   </slide>
 
   <slide>
-    <div>Client books apointment by POSTing to the booking URI</div>
-<pre class="prettyprint" data-lang="http">
-POST /slots/1234 HTTP/1.1
-</pre>
-<pre class="prettyprint" data-lang="xml">
-&lt;appointmentRequest&gt;
-    &lt;patient id="linclark" /&gt;
-&lt;/appointmentRequest&gt;
-      </pre>
-  <footer class="source">based on: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
+    <article class="api-walkthrough">
+      <section>
+        <img src="images/choose-appt.png" alt="iPhone app with chosen appointment." />
+      </section>
+      <section>
+        <div>Client chooses the appointment and POSTs to the booking URI</div>
+  <pre class="prettyprint" data-lang="http">
+POST /slots/97 HTTP/1.1</pre>
+  <pre class="prettyprint" data-lang="json">
+{
+  "_links": {
+    "/rels/patient": {
+      "href": "/patients/linclark"
+    }
+  }
+}</pre>
+      </section>
+      <footer class="source">based on: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
+    </article>
   </slide>
 
   <slide>
-    <div>Server returns confirmation</div>
-<pre class="prettyprint" data-lang="http">
+    <article class="api-walkthrough">
+      <section>
+        <img src="images/created-appt.png" alt="iPhone app with created appointment." />
+      </section>
+      <section>
+        <div>Server returns confirmation</div>
+        <pre class="prettyprint" data-lang="http">
 HTTP/1.1 201 Created
-Location: http://foo-hospital.com/slots/1234/appointment
-</pre>
-    <div>...and links that tell the client what it can do next</div>
-<pre class="prettyprint" data-lang="xml">
-&lt;appointment&gt;
-    &lt;slot id="1234" doctor="jdoe" start="1400" end="1450"/&gt;
-    &lt;patient id="linclark"/&gt;
-    &lt;link rel="/rels/appointment/updateContactInfo"
-        uri="/patients/linclark/contactInfo"/&gt;
-    &lt;link rel="/rels/appointment/cancel"
-        uri="/slots/1234/appointment"/&gt;
+Location: http://.../slots/97/appointment</pre>
+        <div>...and links that tell the client what it can do next</div>
+    <pre class="prettyprint" data-lang="json">
+{
+  "_links": {
+    "self": {
+      "href": "/slots/97/appointment"
+    },
+    "/rels/patient": {
+      "href": "/patients/linclark"
+    },
+    "/rels/cancel": {
+      "href": "/slots/97/appointment"
+    }
     ...
-&lt;appointment&gt;
-</pre>
-  <footer class="source">based on: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
+  }
+}</pre>
+        <footer class="source">based on: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
+      </section>
+    </article>
   </slide>
 
   <slide>
@@ -940,6 +964,7 @@ Location: http://foo-hospital.com/slots/1234/appointment
         <li>"it allows the server to change its URI scheme without breaking clients" ...aka decoupling</li>
         <li>"it helps client developers explore the protocol" ...aka discoverability</li>
       </ol>
+      <footer class="source">source: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
     </article>
   </slide>
 
@@ -965,13 +990,18 @@ $cancel_url = $appt['cancel']['uri'];
     <hgroup>
       <h2>Discoverability</h2>
     </hgroup>
-    <article>
-      <ul>
-        <li>/rels/appointment/updateContactInfo</li>
-        <li>/rels/appointment/cancel</li>
-        <li>/rels/appointment/addSymptom</li>
-        <li>/rels/appointment/medicalHistory</li>
-      </ul>
+    <article class="api-walkthrough">
+      <section>
+        <img src="images/discoverability-base.png" alt="iPhone app with created appointment." />
+      </section>
+      <section>
+        <ul>
+          <li>/rels/patient</li>
+          <li>/rels/cancel</li>
+          <li>/rels/add-symptom</li>
+        </ul>
+      </section>
+      <img src="images/discoverability.png" style="position: absolute; top:328px; left:637px; width: 172px;" />
     </article>
   </slide>
 
