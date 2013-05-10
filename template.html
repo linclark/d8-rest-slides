@@ -854,6 +854,106 @@ class DBLogResource extends ResourceBase {
 
   <slide>
     <hgroup>
+      <h2>Making a doctor's appointment via API</h2>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="http">
+GET /doctors/mjones/slots?date=20100104&status=open HTTP/1.1
+Host: foo-hospital.com</pre>
+    </article>
+    <footer class="source">based on: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
+  </slide>
+
+  <slide>
+<pre class="prettyprint" data-lang="http">
+HTTP/1.1 200 OK
+</pre>
+<pre class="prettyprint" data-lang="xml">
+&lt;openSlotList&gt;
+    &lt;slot id = "1234" doctor = "mjones" start = "1400" end = "1450"&gt;
+        &lt;link rel = "/rels/slot/book"
+              uri = "/slots/1234"/&gt;
+    &lt;/slot&gt;
+    &lt;slot id = "5678" doctor = "mjones" start = "1600" end = "1650"&gt;
+        &lt;link rel = "/rels/slot/book"
+              uri = "/slots/5678"/&gt;
+    &lt;/slot&gt;
+&lt;/openSlotList&gt;
+      </pre>
+  <footer class="source">based on: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
+  </slide>
+
+  <slide>
+<pre class="prettyprint" data-lang="http">
+POST /slots/1234 HTTP/1.1
+</pre>
+<pre class="prettyprint" data-lang="xml">
+&lt;appointmentRequest&gt;
+    &lt;patient id="linclark" /&gt;
+&lt;/appointmentRequest&gt;
+      </pre>
+  <footer class="source">based on: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
+  </slide>
+
+  <slide>
+<pre class="prettyprint" data-lang="http">
+HTTP/1.1 201 Created
+Location: http://foo-hospital.com/slots/1234/appointment
+</pre>
+<pre class="prettyprint" data-lang="xml">
+&lt;appointment&gt;
+    &lt;slot id="1234" doctor="mjones" start="1400" end="1450"/&gt;
+    &lt;patient id="linclark"/&gt;
+    &lt;link rel = "/rels/appointment/updateContactInfo"
+        uri = "/patients/linclark/contactInfo"/&gt;
+    &lt;link rel="/rels/appointment/cancel"
+        uri="/slots/1234/appointment"/&gt;
+    ...
+&lt;appointment&gt;
+</pre>
+  <footer class="source">based on: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>2 benefits of hypermedia</h2>
+    </hgroup>
+    <article>
+      <ol>
+        <li>"it allows the server to change its URI scheme without breaking clients" ...aka decoupling</li>
+        <li>"it helps client developers explore the protocol" ...aka discoverability</li>
+      </ol>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Decoupling</h2>
+    </hgroup>
+<pre class="prettyprint" data-lang="php">
+$cancel_url = $base . '/slots/' . $id . '/appointment';
+</pre>
+<pre class="prettyprint" data-lang="php">
+$cancel_url = $appointment['cancel']['uri'];
+</pre>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Discoverability</h2>
+    </hgroup>
+  </slide>
+
+  <slide style="background-image: url(images/zork_map_1.jpg); background-size: 100%" >
+
+  </slide>
+
+  <slide style="background-image: url(images/zork_map_1.jpg); background-size: 250%; background-position: 0 1000px" >
+
+  </slide>
+
+  <slide>
+    <hgroup>
       <h2>Slide with Bullets that Build</h2>
       <h3>Subtitle Placeholder</h3>
     </hgroup>
