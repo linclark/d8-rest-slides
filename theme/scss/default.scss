@@ -1116,3 +1116,20 @@ span.mark {
 div.normalizer {
   @include callout-box;
 }
+
+.api-walkthrough {
+  display: -webkit-flex;
+  display: flex;
+  section:first-of-type {
+    flex:1;
+    -webkit-order: 1;
+  }
+  section:last-of-type {
+    flex: 3;
+    min-width: 70%;
+    -webkit-order: 0;
+  }
+  img {
+    width: 100%;
+  }
+}
