@@ -857,6 +857,7 @@ class DBLogResource extends ResourceBase {
       <h2>Making a doctor's appointment via API</h2>
     </hgroup>
     <article>
+      <div>Get a list of open appointments</div>
       <pre class="prettyprint" data-lang="http">
 GET /doctors/mjones/slots?date=20100104&status=open HTTP/1.1
 Host: foo-hospital.com</pre>
@@ -865,6 +866,8 @@ Host: foo-hospital.com</pre>
   </slide>
 
   <slide>
+    <article>
+      <div>Server returns list of open appointments</div>
 <pre class="prettyprint" data-lang="http">
 HTTP/1.1 200 OK
 </pre>
@@ -880,10 +883,13 @@ HTTP/1.1 200 OK
     &lt;/slot&gt;
 &lt;/openSlotList&gt;
       </pre>
-  <footer class="source">based on: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
+      <div>Client chooses the appointment, gets the booking URI</div>
+    </article>
+    <footer class="source">based on: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
   </slide>
 
   <slide>
+    <div>Client books apointment by POSTing to the booking URI</div>
 <pre class="prettyprint" data-lang="http">
 POST /slots/1234 HTTP/1.1
 </pre>
@@ -896,6 +902,7 @@ POST /slots/1234 HTTP/1.1
   </slide>
 
   <slide>
+    <div>Server returns confirmation and links that tell the client what it can do next</div>
 <pre class="prettyprint" data-lang="http">
 HTTP/1.1 201 Created
 Location: http://foo-hospital.com/slots/1234/appointment
