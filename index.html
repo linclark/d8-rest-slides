@@ -864,7 +864,7 @@ class DBLogResource extends ResourceBase {
         <div>Get a list of open slots in the schedule</div>
         <pre class="prettyprint" data-lang="http">
 GET /doctors/slots HTTP/1.1
-Host: foo-hospital.com</pre>
+Host: med.org</pre>
       </section>
       <footer class="source">based on: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
     </article>
@@ -883,11 +883,13 @@ HTTP/1.1 200 OK</pre>
 {
   ...
   "_embedded": {
-    "/rels/open-slots": [
+    "http://med.org/rels/open-slots": [
       {
         "_links": {
           "self": { "href": "/slots/97" },
-          "/rels/book": { "href": "/slots/97"}
+          "http://med.org/rels/book": {
+            "href": "/slots/97"
+          }
         }
         "id": 97,
         "doctor": "Dr. Doe",
@@ -914,7 +916,7 @@ POST /slots/97 HTTP/1.1</pre>
   <pre class="prettyprint" data-lang="json">
 {
   "_links": {
-    "/rels/patient": {
+    "http://med.org/rels/patient": {
       "href": "/patients/linclark"
     }
   }
@@ -941,10 +943,10 @@ Location: http://.../slots/97/appointment</pre>
     "self": {
       "href": "/slots/97/appointment"
     },
-    "/rels/patient": {
+    "http://med.org/rels/patient": {
       "href": "/patients/linclark"
     },
-    "/rels/cancel": {
+    "http://med.org/rels/cancel": {
       "href": "/slots/97/appointment"
     }
     ...
@@ -996,9 +998,9 @@ $cancel_url = $appt['cancel']['uri'];
       </section>
       <section>
         <ul>
-          <li>/rels/patient</li>
-          <li>/rels/cancel</li>
-          <li>/rels/add-symptom</li>
+          <li>http://med.org/rels/patient</li>
+          <li>http://med.org/rels/cancel</li>
+          <li>http://med.org/rels/add-symptom</li>
         </ul>
       </section>
       <img src="images/discoverability.png" style="position: absolute; top:328px; left:637px; width: 172px;" />
