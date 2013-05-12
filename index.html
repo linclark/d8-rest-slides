@@ -1055,7 +1055,7 @@ $cancel_url = $base . '/slots/' . $appt['id'] . '/appointment';
     <div>but what if the server changes its URI structure?</div>
     <div>Instead, get the URI from the links.</div>
 <pre class="prettyprint" data-lang="php">
-$cancel_url = $appt['cancel']['uri'];
+$cancel_url = $appt['http://med.org/rels/cancel']['uri'];
 </pre>
     </article>
   </slide>
