@@ -207,6 +207,7 @@ URL: https://code.google.com/p/io-2012-slides
     <aside class="gdbar"></aside>
     <hgroup class="auto-fadein">
       <h2>REST in Drupal</h2>
+      <h3>How we implement those standards</h3>
     </hgroup>
   </slide>
 
@@ -235,13 +236,42 @@ URL: https://code.google.com/p/io-2012-slides
 
   <slide>
     <hgroup>
-      <h2>Modules in Drupal 7 contrib</h2>
+      <h2>Modules in Drupal 7 contrib: Services</h2>
     </hgroup>
     <article>
       <ul>
-        <li>Services</li>
-        <li>RESTWS</li>
-        <li>Services Entity API</li>
+        <li><a href="http://drupal.org/project/services">http://drupal.org/project/services</a>
+        <li>Endpoint concept with custom URL paths</li>
+        <li>Caters for RPC and SOAP also</li>
+        <li>Uses drupal_form_submit() for write operations</li>
+        <li>Only covers hard coded entities like nodes, comments, users</li>
+        <li>Explicit authentication info hooks.</li>
+        <li>No hypermedia controls</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Drupal 7 contrib: RESTWS and Services Entity API</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li><b>RESTWS</b> <a href="http://drupal.org/project/restws">http://drupal.org/project/restws</a>
+          <ul>
+            <li>Relies on Entity API and metadata about entities</li>
+            <li>No endpoints: uses /node/1.json or /node/1.xml</li>
+            <li>No configuration: exposes any entity type out of the box</li>
+            <li>Access control on top of Entity API and Field API</li>
+            <li>Standard user authentication over session cookies or HTTP Basic Auth submodule</li>
+          </ul>
+        </li>
+        <li><b>Services Entity API</b> <a href="http://drupal.org/project/services_entity">http://drupal.org/project/services_entity</a>
+          <ul>
+            <li>Combines approaches from Services and RESTWS</li>
+            <li>Configurable endpoints + Entity API for data management</li>
+          </ul>
+        </li>
       </ul>
     </article>
   </slide>
@@ -528,6 +558,17 @@ $client->post('entity/node', array(
       <h2>GET Collections</h2>
       <h3>Views to the rescue!</h3>
     </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Building lists with Views</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Views is a query builder </li>
+      </ul>
+    </article>
   </slide>
 
   <slide class="segue dark nobackground">
