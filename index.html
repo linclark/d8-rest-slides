@@ -297,14 +297,25 @@ URL: https://code.google.com/p/io-2012-slides
       <ul>
         <li>A resource is the object of interest. Example: the node resource</li>
         <li>An operation is an action to read or manipulate a resource.
-          <ul>
-            <li>Create: HTTP POST /entity/node</li>
-            <li>Read: HTTP GET /entity/node/1</li>
-            <li>Update: HTTP PATCH /entity/node/1</li>
-            <li>Delete: HTTP DELETE /entity/node/1</li>
-          </ul>
         </li>
       </ul>
+      <table>
+        <tr>
+          <th>Operation</th><th>HTTP request method</th><th>path</th>
+        </tr>
+        <tr>
+          <td>Create</td><td>POST</td><td>/entity/node</td>
+        </tr>
+        <tr>
+          <td>Read</td><td>GET</td><td>/entity/node/1</td>
+        </tr>
+        <tr>
+          <td>Update</td><td>PATCH</td><td>/entity/node/1</td>
+        </tr>
+        <tr>
+          <td>Delete</td><td>DELETE</td><td>/entity/node/1</td>
+        </tr>
+      </table>
     </article>
   </slide>
 
@@ -742,7 +753,15 @@ class DBLogResource extends ResourceBase {
     </article>
   </slide>
 
-  <!-- Comparision to Services -->
+  <slide>
+    <hgroup>
+      <h2>REST request pipeline</h2>
+    </hgroup>
+    <article>
+      <img src="images/rest_pipeline.svg">
+    </article>
+  </slide>
+
   <!--<slide>
     <hgroup>
       <h2>Endpoints</h2>
