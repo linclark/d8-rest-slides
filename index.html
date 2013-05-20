@@ -486,6 +486,21 @@ Array(
     </article>
   </slide>
 
+  <slide>
+    <hgroup>
+      <h2>Building lists with Views</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Views is a configurable query builder in Drupal 8 core</li>
+        <li>Display plugin that renders Views data with Serializer</li>
+        <li>Comparable to Views Datasource in Drupal 7 <a href="http://drupal.org/project/views_datasource">http://drupal.org/project/views_datasource</a></li>
+        <li>Support for outputting whole entities</li>
+        <li>Show only selected fields for one entity item</li>
+      </ul>
+    </article>
+  </slide>
+
   <slide class="segue dark nobackground">
     <aside class="gdbar"></aside>
     <hgroup class="auto-fadein">
@@ -561,37 +576,6 @@ $client->post('entity/node', array(
   'X-CSRF-Token' => $token,
 ), $data)->send();</pre>
     </article>
-  </slide>
-
-  <slide class="segue dark nobackground">
-    <aside class="gdbar"></aside>
-    <hgroup class="auto-fadein">
-      <h2>GET Collections</h2>
-      <h3>Views to the rescue!</h3>
-    </hgroup>
-  </slide>
-
-  <slide>
-    <hgroup>
-      <h2>Building lists with Views</h2>
-    </hgroup>
-    <article>
-      <ul>
-        <li>Views is a configurable query builder in Drupal 8 core</li>
-        <li>Display plugin that renders Views data with Serializer</li>
-        <li>Comparable to Views Datasource in Drupal 7 <a href="http://drupal.org/project/views_datasource">http://drupal.org/project/views_datasource</a></li>
-        <li>Support for outputting whole entities</li>
-        <li>Show only selected fields for one entity item</li>
-      </ul>
-    </article>
-  </slide>
-
-  <slide>
-    <section>
-      <video src="videos/rest-views.mp4" width="97%" style="position: absolute; left: 1.5%; top:0px;" controls preload="auto">
-        <p>Your browser doesn't support HTML5 video. <a href="videos/rest-views.mp4">Download the video</a>.</p>
-      </video>
-    </section>
   </slide>
 
   <slide class="segue dark nobackground">
