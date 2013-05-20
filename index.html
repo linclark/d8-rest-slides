@@ -1067,13 +1067,11 @@ Location: http://.../slots/97/appointment</pre>
       <h2>Decoupling</h2>
     </hgroup>
     <article>
-    <div>How do you get the URI for canceling an appointment?</div>
-    <div>You can figure out the URI pattern and hard code the logic for constructing the URI in your app...</div>
+Hard-coded:
 <pre class="prettyprint" data-lang="php">
 $cancel_url = $base . '/slots/' . $appt['id'] . '/appointment';
 </pre>
-    <div>but what if the server changes its URI structure?</div>
-    <div>Instead, get the URI from the links.</div>
+Using link relations:
 <pre class="prettyprint" data-lang="php">
 $cancel_url = $appt['http://med.org/rels/cancel']['uri'];
 </pre>
