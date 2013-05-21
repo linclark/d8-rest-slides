@@ -903,8 +903,8 @@ class DBLogResource extends ResourceBase {
       <h2>Normalizers</h2>
       <h3>Chain of responsibility</h3>
     </hgroup>
-    <article class="smaller">
-      <div class="normalizer">
+    <article class="smaller build fade">
+      <div class="normalizer" style="margin-top:100px;">
         EntityReferenceItemNormalizer
       </div>
       <div class="normalizer">
@@ -915,6 +915,24 @@ class DBLogResource extends ResourceBase {
       </div>
       <div class="normalizer">
         EntityNormalizer
+      </div>
+      <div class="supportsNormalization" style="top:230px">
+        supportsNormalization('Drupal\image\Type\ImageItem', 'json')
+        <img src="images/arrow.png" />
+        FALSE
+      </div>
+      <div class="supportsNormalization" style="top:300px">
+        supportsNormalization('Drupal\image\Type\ImageItem', 'json')
+        <img src="images/arrow.png" />
+        TRUE
+      </div>
+      <div class="normalizer" style="position: absolute; top:160px">
+        ImageItemNormalizer
+      </div>
+      <div class="supportsNormalization" style="top:100px">
+        supportsNormalization('Drupal\image\Type\ImageItem', 'json')
+        <img src="images/arrow.png" />
+        TRUE
       </div>
     </article>
   </slide>

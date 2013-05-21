@@ -626,12 +626,8 @@ article.smaller {
     opacity: 0;
   }
 
-  .build-fade {
-    opacity: 0.3;
-
-    &:hover {
-      opacity: 1.0;
-    }
+  .build-fade.supportsNormalization {
+      opacity: 0;
   }
 }
 
@@ -1152,5 +1148,15 @@ div.normalizer {
     flex: 3;
     min-width: 70%;
     -webkit-order: 0;
+  }
+}
+
+.supportsNormalization {
+  position: absolute;
+  left: 520px;
+  width: 40%;
+
+  img {
+    width: 100%;
   }
 }
