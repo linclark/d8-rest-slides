@@ -1151,6 +1151,13 @@ div.normalizer {
   }
 }
 
+.two-col {
+  @include my-flex;
+  > div {
+    min-width: 50%;
+  }
+}
+
 .supportsNormalization {
   position: absolute;
   left: 520px;

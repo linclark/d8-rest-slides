@@ -102,7 +102,7 @@ URL: https://code.google.com/p/io-2012-slides
     <hgroup>
       <h2>Base Format</h2>
     </hgroup>
-    <article>
+    <article class="build">
       <pre class="prettyprint" data-lang="json">
 {
   "name": "Larry Garfield",
@@ -130,7 +130,7 @@ URL: https://code.google.com/p/io-2012-slides
     <hgroup>
       <h2>URI</h2>
     </hgroup>
-    <article>
+    <article class="build">
       <h1>Resource</h1>
       <ul>
         <li>http://example.com/entity/node/1</li>
@@ -142,6 +142,23 @@ URL: https://code.google.com/p/io-2012-slides
         <li>http://example.com/node/article/field_tags</li>
         <li>http://drupal.org/rest/relations/field-configuration</li>
       </ul>
+      <div class="two-col build">
+        <div class="build">
+          <div>POST /endpoint</div>
+          <div>{ id: 3 }</div>
+          <svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" style="position:absolute; left:70px; top: 390px;">
+            <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+            <g>
+              <title>Cross out</title>
+              <line id="svg_1" y2="69" x2="181" y1="5" x1="4" fill-opacity="0" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" stroke="#bf0000" fill="none"/>
+              <line stroke="#bf0000" id="svg_2" y2="69" x2="5" y1="5" x1="179" fill-opacity="0" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+            </g>
+          </svg>
+        </div>
+        <div>
+          <div>POST /thing/3</div>
+        </div>
+      </div>
     </article>
   </slide>
 
@@ -149,7 +166,7 @@ URL: https://code.google.com/p/io-2012-slides
   <hgroup>
     <h2>Media Type</h2>
   </hgroup>
-    <article>
+    <article class="build">
       <ul class="build">
         <li>application/json</li>
         <li>application/hal+json
@@ -163,6 +180,23 @@ to other resources.
 </pre>
         </li>
       </ul>
+      <div class="two-col build">
+        <div class="build">
+          <div>/node/1.json</div>
+          <div>/node/1.hal_json</div>
+          <svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" style="position:absolute; left:70px; top: 390px;">
+            <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+            <g>
+              <title>Cross out</title>
+              <line id="svg_1" y2="69" x2="181" y1="5" x1="4" fill-opacity="0" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" stroke="#bf0000" fill="none"/>
+              <line stroke="#bf0000" id="svg_2" y2="69" x2="5" y1="5" x1="179" fill-opacity="0" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+            </g>
+          </svg>
+        </div>
+        <div>
+          Accept: application/json
+        </div>
+      </div>
     </article>
   </slide>
 
@@ -170,7 +204,7 @@ to other resources.
     <hgroup>
       <h2>HTTP method</h2>
     </hgroup>
-    <article>
+    <article class="build">
       <dl class="build">
         <dt>GET</dt>
         <dd>Go fetch this page and bring it back to me. Don't change it.</dd>
@@ -181,6 +215,24 @@ to other resources.
         <dt>DELETE</dt>
         <dd>Get rid of that thing.</dd>
       </dl>
+      <div class="two-col build">
+        <div class="build">
+          <div>/node/1/get</div>
+          <div>/node/add</div>
+          <svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" style="position:absolute; left:70px; top: 390px;">
+            <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+            <g>
+              <title>Cross out</title>
+              <line id="svg_1" y2="69" x2="181" y1="5" x1="4" fill-opacity="0" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" stroke="#bf0000" fill="none"/>
+              <line stroke="#bf0000" id="svg_2" y2="69" x2="5" y1="5" x1="179" fill-opacity="0" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+            </g>
+          </svg>
+        </div>
+        <div>
+          <div>GET /node/1</div>
+          <div>POST /node</div>
+        </div>
+      </div>
     </article>
   </slide>
 
