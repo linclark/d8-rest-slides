@@ -50,13 +50,18 @@ $article-content-top-padding: 45px;
   background-color: white;
 }
 
-@mixin callout-box {
+@mixin box-base {
   @include border-radius(10px, 10px);
   background-color: white;
   border: #a9a9a9 solid 1px;
   margin-bottom: 20px;
   padding: 20px;
-  width: 45%;
+}
+
+@mixin callout-box {
+  @include box-base;
+  margin-top: 200px;
+  width: 55%;
 }
 
 @mixin my-flex() {
@@ -1104,6 +1109,15 @@ span.mark {
   border: 3px solid red;
 }
 
+.wrapping-box {
+  @include box-base;
+}
+
+.right-wrong {
+  border-top: gray dashed 2px;
+  padding-top: 20px;
+}
+
 .image-annotation {
   @include callout-box;
   float: right;
@@ -1113,12 +1127,20 @@ span.mark {
   }
 
   dd {
-    width: 40%;
+    width: 50%;
   }
 }
 
 div.normalizer {
-  @include callout-box;
+  @include box-base;
+  font-size: .8em;
+  width: 45%;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
 }
 
 .intro-walkthrough {
@@ -1160,7 +1182,7 @@ div.normalizer {
 
 .supportsNormalization {
   position: absolute;
-  left: 520px;
+  left: 480px;
   width: 40%;
 
   img {

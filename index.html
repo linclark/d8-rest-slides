@@ -53,16 +53,16 @@ URL: https://code.google.com/p/io-2012-slides
       <dl class="build">
         <dt>Web Services</dt>
         <dd>A web service is a method of communication between two electronic devices over the World Wide Web.
-          <div class="intro-walkthrough">
+          <div class="intro-walkthrough build">
             <section><img src="images/osm-phone.png" /></section>
-            <section><img src="images/OpenStreetMap.png" /></section>
-            <section>
+            <section><img src="images/OpenStreetMap.png" style="padding-top:70px" /></section>
+            <section class="build">
               <div>
-                <p>Get the map data for Portland</p>
+                <p class="label" style="padding-top:70px">Get Portland map data</p>
                 <img src="images/arrow.png" />
               </div>
               <div>
-                <p>Add a new road</p>
+                <p class="label">Add a new road</p>
                 <img src="images/arrow.png" />
               </div>
             </section>
@@ -142,7 +142,7 @@ URL: https://code.google.com/p/io-2012-slides
         <li>http://example.com/node/article/field_tags</li>
         <li>http://drupal.org/rest/relations/field-configuration</li>
       </ul>
-      <div class="two-col build">
+      <div class="two-col build right-wrong">
         <div class="build">
           <div>POST /endpoint</div>
           <div>{ id: 3 }</div>
@@ -180,7 +180,7 @@ to other resources.
 </pre>
         </li>
       </ul>
-      <div class="two-col build">
+      <div class="two-col build right-wrong">
         <div class="build">
           <div>/node/1.json</div>
           <div>/node/1.hal_json</div>
@@ -215,7 +215,7 @@ to other resources.
         <dt>DELETE</dt>
         <dd>Get rid of that thing.</dd>
       </dl>
-      <div class="two-col build">
+      <div class="two-col build right-wrong">
         <div class="build">
           <div>/node/1/get</div>
           <div>/node/add</div>
@@ -968,23 +968,33 @@ class DBLogResource extends ResourceBase {
       <div class="normalizer">
         EntityNormalizer
       </div>
-      <div class="supportsNormalization" style="top:230px">
-        supportsNormalization('Drupal\image\Type\ImageItem', 'json')
-        <img src="images/arrow.png" />
-        FALSE
+      <pre>
+$object is instance of Drupal\image\Type\ImageItem
+$format is 'json'
+</pre>
+      <div class="supportsNormalization label" style="top:230px">
+        <div>
+          supportsNormalization($object, $format)
+          <img src="images/arrow.png" />
+        </div>
+        <span style="color:red">FALSE</span>
       </div>
-      <div class="supportsNormalization" style="top:300px">
-        supportsNormalization('Drupal\image\Type\ImageItem', 'json')
-        <img src="images/arrow.png" />
-        TRUE
+      <div class="supportsNormalization label" style="top:300px">
+        <div>
+          supportsNormalization($object, $format)
+          <img src="images/arrow.png" />
+        </div>
+        <span style="color:green">TRUE</span>
       </div>
       <div class="normalizer" style="position: absolute; top:160px">
         ImageItemNormalizer
       </div>
-      <div class="supportsNormalization" style="top:100px">
-        supportsNormalization('Drupal\image\Type\ImageItem', 'json')
-        <img src="images/arrow.png" />
-        TRUE
+      <div class="supportsNormalization label" style="top:160px">
+        <div>
+          supportsNormalization($object, $format)
+          <img src="images/arrow.png" />
+        </div>
+        <span style="color:green">TRUE</span>
       </div>
     </article>
   </slide>
@@ -1022,10 +1032,11 @@ class DBLogResource extends ResourceBase {
       <section>
         <img src="images/upcoming-appts.png" alt="iPhone app with upcoming appointments button." />
       </section>
-      <section>
+      <section class="build">
         <div>Get a list of open slots in the schedule</div>
         <pre class="prettyprint" data-lang="http">
 GET /doctors/slots HTTP/1.1
+Accept: application/hal+json
 Host: med.org</pre>
       </section>
       <footer class="source">based on: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
@@ -1037,10 +1048,11 @@ Host: med.org</pre>
       <section>
         <img src="images/list-appts.png" alt="iPhone app with list of appointments." />
       </section>
-      <section>
+      <section class="build">
         <div>Server returns list of open appointments</div>
   <pre class="prettyprint" data-lang="http">
-HTTP/1.1 200 OK</pre>
+HTTP/1.1 200 OK
+Content-Type: application/hal+json</pre>
   <pre class="prettyprint" data-lang="json">
 {
   ...
@@ -1071,10 +1083,11 @@ HTTP/1.1 200 OK</pre>
       <section>
         <img src="images/choose-appt.png" alt="iPhone app with chosen appointment." />
       </section>
-      <section>
+      <section class="build">
         <div>Client chooses the appointment and POSTs to the booking URI</div>
   <pre class="prettyprint" data-lang="http">
-POST /slots/97 HTTP/1.1</pre>
+POST /slots/97 HTTP/1.1
+Content-Type: application/hal+json</pre>
   <pre class="prettyprint" data-lang="json">
 {
   "_links": {
@@ -1093,7 +1106,7 @@ POST /slots/97 HTTP/1.1</pre>
       <section>
         <img src="images/created-appt.png" alt="iPhone app with created appointment." />
       </section>
-      <section>
+      <section class="build">
         <div>Server returns confirmation</div>
         <pre class="prettyprint" data-lang="http">
 HTTP/1.1 201 Created
