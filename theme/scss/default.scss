@@ -60,7 +60,6 @@ $article-content-top-padding: 45px;
 
 @mixin callout-box {
   @include box-base;
-  margin-top: 200px;
   width: 55%;
 }
 
@@ -1120,7 +1119,9 @@ span.mark {
 
 .image-annotation {
   @include callout-box;
-  float: right;
+  position: absolute;
+  right:50px;
+  z-index: 100;
 
   dt {
     width: 45%;
