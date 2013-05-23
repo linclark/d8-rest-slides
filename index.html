@@ -146,11 +146,10 @@ URL: https://code.google.com/p/io-2012-slides
         <div class="build">
           <div>POST /endpoint</div>
           <div>{ id: 3 }</div>
-          <svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" style="position:absolute; left:70px; top: 390px;">
+          <svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" style="position:relative; left:0px; top: -60px;">
             <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
             <g>
               <title>Cross out</title>
-              <line id="svg_1" y2="69" x2="181" y1="5" x1="4" fill-opacity="0" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" stroke="#bf0000" fill="none"/>
               <line stroke="#bf0000" id="svg_2" y2="69" x2="5" y1="5" x1="179" fill-opacity="0" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
             </g>
           </svg>
@@ -184,11 +183,10 @@ to other resources.
         <div class="build">
           <div>/node/1.json</div>
           <div>/node/1.hal_json</div>
-          <svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" style="position:absolute; left:70px; top: 390px;">
+          <svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" style="position:relative; left:0px; top: -60px;">
             <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
             <g>
               <title>Cross out</title>
-              <line id="svg_1" y2="69" x2="181" y1="5" x1="4" fill-opacity="0" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" stroke="#bf0000" fill="none"/>
               <line stroke="#bf0000" id="svg_2" y2="69" x2="5" y1="5" x1="179" fill-opacity="0" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
             </g>
           </svg>
@@ -219,11 +217,10 @@ to other resources.
         <div class="build">
           <div>/node/1/get</div>
           <div>/node/add</div>
-          <svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" style="position:absolute; left:70px; top: 390px;">
+          <svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" style="position:relative; left:0px; top: -60px;">
             <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
             <g>
               <title>Cross out</title>
-              <line id="svg_1" y2="69" x2="181" y1="5" x1="4" fill-opacity="0" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" stroke="#bf0000" fill="none"/>
               <line stroke="#bf0000" id="svg_2" y2="69" x2="5" y1="5" x1="179" fill-opacity="0" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
             </g>
           </svg>
@@ -858,7 +855,7 @@ class DBLogResource extends ResourceBase {
 
   <!-- Serialization -->
   <slide class="segue dark nobackground">
-    <aside class="gdbar">&lt; /&gt;</aside>
+    <aside class="gdbar"></aside>
     <hgroup class="auto-fadein">
       <h2>Serialization</h2>
       <h3>Getting things to JSON (et al) and back again</h3>
@@ -882,7 +879,8 @@ class DBLogResource extends ResourceBase {
     <hgroup>
       <h2>Symfony Serializer</h2>
     </hgroup>
-    <article>
+    <article class="build">
+      <pre>$serializer->serialize($object, $format, $context)</pre>
       <img src="images/serialize-process.png" width="100%" alt="Serializer workflow from object to array using Normalizer::normalize, and from array to string using Encoder::encode."/>
     </article>
   </slide>
@@ -979,7 +977,7 @@ $format is 'json'
         </div>
         <span style="color:red">FALSE</span>
       </div>
-      <div class="supportsNormalization label" style="top:300px">
+      <div class="supportsNormalization label" style="top:320px">
         <div>
           supportsNormalization($object, $format)
           <img src="images/arrow.png" />
@@ -989,7 +987,7 @@ $format is 'json'
       <div class="normalizer" style="position: absolute; top:160px">
         ImageItemNormalizer
       </div>
-      <div class="supportsNormalization label" style="top:160px">
+      <div class="supportsNormalization label" style="top:150px">
         <div>
           supportsNormalization($object, $format)
           <img src="images/arrow.png" />
