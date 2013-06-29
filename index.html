@@ -690,7 +690,8 @@ print_r($response);</pre>
 resources:
   'entity:node':
     GET:
-      hal_json: 'TRUE'
+      supported_formats:
+        - hal_json
     POST:
       hal_json: 'TRUE'</pre></li>
         <li>Grant the "Access POST on Content resource" to the administrator user role.</li>
