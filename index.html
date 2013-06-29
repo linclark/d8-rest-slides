@@ -545,25 +545,115 @@ print_r($response);</pre>
     </hgroup>
     <article>
       <pre>
-Array(
-  [_links] => Array(
-    [self] => Array(
-      [href] => http://drupal-8.localhost/node/1 )
-    [type] => Array(
-      [href] => http://drupal-8.localhost/rest/type/node/page )
-    ...)
-  [nid] => Array(
-    [0] => Array(
-      [value] => 1 )
-  )
-  ...
-  [body] => Array(
-    [0] => Array(
-      [value] => Camur eu feugiat ...
-      [format] => restricted_html
-      [summary] =>
-)))</pre>
-    </article>
+{
+    "nid": [
+        {
+            "value": "1"
+        }
+    ],
+    "uuid": [
+        {
+            "value": "f11b6d96-5709-4779-815c-9266f79b21c7"
+        }
+    ],
+    "vid": [
+        {
+            "value": "1"
+        }
+    ],
+    "type": [
+        {
+            "value": "page"
+        }
+    ],
+    "langcode": [
+        {
+            "value": "en"
+        }
+    ],
+    "title": [
+        {
+            "value": "Rest"
+        }
+    ],
+    "_embedded": {
+        "http://localhost/d8ser/rest/relation/node/page/uid": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "http://localhost/d8ser/user/1"
+                    },
+                    "type": {
+                        "href": "http://localhost/d8ser/rest/type/user/user"
+                    }
+                }
+            }
+        ],
+        "http://localhost/d8ser/rest/relation/node/page/revision_uid": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "http://localhost/d8ser/user/1"
+                    },
+                    "type": {
+                        "href": "http://localhost/d8ser/rest/type/user/user"
+                    }
+                }
+            }
+        ]
+    },
+    "status": [
+        {
+            "value": "1"
+        }
+    ],
+    "created": [
+        {
+            "value": "1372512896"
+        }
+    ],
+    "changed": [
+        {
+            "value": "1372512901"
+        }
+    ],
+    "comment": [
+        {
+            "value": "1"
+        }
+    ],
+    "promote": [
+        {
+            "value": "0"
+        }
+    ],
+    "sticky": [
+        {
+            "value": "0"
+        }
+    ],
+    "tnid": [
+        {
+            "value": "0"
+        }
+    ],
+    "translate": [
+        {
+            "value": "0"
+        }
+    ],
+    "revision_timestamp": [
+        {
+            "value": "1372512901"
+        }
+    ],
+    "log": [
+        {
+            "value": ""
+        }
+    ]
+}
+</pre>    </article>
   </slide>
 
   <slide>
