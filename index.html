@@ -467,17 +467,16 @@ to other resources.
     </hgroup>
     <article>
       <ul class="build">
-        <li>Copy <b>rest.settings.yml</b> to the config staging directory</li>
-        <li><pre>cp sites/default/files/config_SNJe.../active/rest.settings.yml \
-sites/default/files/config_SNJe.../staging/rest.settings.yml</pre></li>
+        <li>Copy files in active config to the config staging directory</li>
+        <li><pre>cp sites/default/files/config_SNJe.../active/* \
+sites/default/files/config_SNJe.../staging/</pre></li>
         <li>Edit rest.settings.yml in the config staging directory</li>
         <li><pre class="prettyprint" data-lang="yaml">
 resources:
   'entity:node':        # We just enable the node resource alone.
     GET:                # Enable HTTP GET requests.
       hal_json: 'TRUE'  # Only the HAL format is enabled.</pre></li>
-        <li>Import the configuration</li>
-        <li><pre>drush config-import --yes # UI: /admin/config/development/sync</pre></li>
+        <li>Sync the configuration at admin/config/development/sync</li>
         <li>Clear caches</li>
         <li><pre>drush cc all # UI: /admin/config/development/performance</pre></li>
       </ul>
@@ -494,10 +493,6 @@ resources:
         <li>Note: node and field access still applies on top of that.</li>
         <li><pre>drush role-add-perm anonymous 'restful get entity:node'</pre></li>
         <li>Create a node at /node/add/page</li>
-        <li><pre>git clone --branch 8.x-1.x \
-http://git.drupal.org/project/devel.git modules/devel
-drush en devel_generate --yes
-drush generate-content --types=page 1</pre></li>
       </ul>
     </article>
   </slide>
