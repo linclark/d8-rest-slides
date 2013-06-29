@@ -1,0 +1,17 @@
+{
+  "_links": {
+    "self": {
+      "href": "/slots/97/appointment"
+    },
+    "/rels/patient": {
+      "href": "/patients/linclark"
+    },
+    "/rels/cancel": {
+      "href": "/slots/97/appointment"
+    },
+    "/rels/add-symptom": {
+      "href": "/slots/97/appointment/symptoms"
+    }
+    ...
+  }
+}

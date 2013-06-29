@@ -1,0 +1,1227 @@
+<!--
+REST and Serialization in Drupal 8 presentation by Lin Clark and Klaus Purer
+presented at DrupalCon Portland, May 2013
+
+Adapted from the Google IO 2012/2013 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="theme/css/phone.css">
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="js/slides" src="js/require-1.0.8.min.js"></script>
+</head>
+<body style="opacity: 0">
+
+<slides>
+
+  <!-- Presenter Introduction -->
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/drupalcon_pdx_icon_2.png"></aside>
+    <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"></aside>
+    <hgroup class="auto-fadein">
+      <h2>What is REST?</h2>
+    </hgroup>
+  </slide>
+  <!-- Introducing Terms -->
+  <slide>
+    <section>
+      <dl class="build">
+        <dt>Web Services</dt>
+        <dd>A web service is a method of communication between two electronic devices over the World Wide Web.
+          <div class="intro-walkthrough build">
+            <section><img src="images/osm-phone.png" /></section>
+            <section><img src="images/OpenStreetMap.png" style="padding-top:70px" /></section>
+            <section class="build">
+              <div>
+                <p class="label" style="padding-top:70px">Get Portland map data</p>
+                <img src="images/arrow.png" />
+              </div>
+              <div>
+                <p class="label">Add a new road</p>
+                <img src="images/arrow.png" />
+              </div>
+            </section>
+          </div>
+        </dd>
+        <dt>REST</dt>
+        <dd>A style of software architecture for distributed systems such as the World Wide Web.</dd>
+      </dl>
+      <footer class="source">source: Wikipedia</footer>
+    </section>
+  </slide>
+
+  <slide>
+    <section>
+      <video src="videos/get.mp4" width="100%" style="position: absolute; left: 0px; top:0px;" controls preload="auto">
+        <p>Your browser doesn't support HTML5 video. <a href="videos/get-post.mp4">Download the video</a>.</p>
+      </video>
+    </section>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>4 components of the REST request</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Base Format</li>
+        <li>HTTP Verbs</li>
+        <li>URI</li>
+        <li>Media Type (aka MIME type)</li>
+      </ul>
+      <footer class="source">based on: Pro PHP XML and Web Services, Chapter 17</footer>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Base Format</h2>
+    </hgroup>
+    <article class="build">
+      <pre class="prettyprint" data-lang="json">
+{
+  "name": "Larry Garfield",
+  "role": {
+    "name": "Initiative Owner",
+    "project": "WSSCI"
+  },
+  "vested": true
+}
+      </pre>
+      <pre class="prettyprint" data-lang="xml">
+&lt;contributor&gt;
+  &lt;name&gt;Larry Garfield&lt;/name&gt;
+  &lt;role&gt;
+    &lt;name&gt;Initiative Owner&lt;/name&gt;
+    &lt;project&gt;WSCCI&lt;/project&gt;
+  &lt;/role&gt;
+  &lt;vested&gt;true&lt;/vested&gt;
+&lt;/contributor&gt;
+      </pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>URI</h2>
+    </hgroup>
+    <article class="build">
+      <h1>Resource</h1>
+      <ul>
+        <li>http://example.com/entity/node/1</li>
+        <li>http://example.com/node/1</li>
+        <li>http://example.com/user/1</li>
+      </ul>
+      <h1>Link Relation</h1>
+      <ul>
+        <li>http://example.com/node/article/field_tags</li>
+        <li>http://drupal.org/rest/relations/field-configuration</li>
+      </ul>
+      <div class="two-col build right-wrong">
+        <div class="build">
+          <div>POST /endpoint</div>
+          <div>{ id: 3 }</div>
+          <svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" style="position:relative; left:0px; top: -60px;">
+            <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+            <g>
+              <title>Cross out</title>
+              <line stroke="#bf0000" id="svg_2" y2="69" x2="5" y1="5" x1="179" fill-opacity="0" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+            </g>
+          </svg>
+        </div>
+        <div>
+          <div>POST /thing/3</div>
+        </div>
+      </div>
+    </article>
+  </slide>
+
+  <slide>
+  <hgroup>
+    <h2>Media Type</h2>
+  </hgroup>
+    <article class="build">
+      <ul class="build">
+        <li>application/json</li>
+        <li>application/hal+json
+      <pre>
+Reserved properties: _links and _embedded</pre>
+          </div>
+        </li>
+        <li>application/vnd.github+json
+              <pre>All resources may have one or more *_url properties linking
+to other resources.
+</pre>
+        </li>
+      </ul>
+      <div class="two-col build right-wrong">
+        <div class="build">
+          <div>/node/1.json</div>
+          <div>/node/1.hal_json</div>
+          <svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" style="position:relative; left:0px; top: -60px;">
+            <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+            <g>
+              <title>Cross out</title>
+              <line stroke="#bf0000" id="svg_2" y2="69" x2="5" y1="5" x1="179" fill-opacity="0" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+            </g>
+          </svg>
+        </div>
+        <div>
+          Accept: application/json
+        </div>
+      </div>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>HTTP method</h2>
+    </hgroup>
+    <article class="build">
+      <dl class="build">
+        <dt>GET</dt>
+        <dd>Go fetch this page and bring it back to me. Don't change it.</dd>
+        <dt>POST</dt>
+        <dd>Here's some data, go make a thing for me.</dd>
+        <dt>PATCH</dt>
+        <dd>Here are some changed fields, go update them on the existing thing.</dd>
+        <dt>DELETE</dt>
+        <dd>Get rid of that thing.</dd>
+      </dl>
+      <div class="two-col build right-wrong">
+        <div class="build">
+          <div>/node/1/get</div>
+          <div>/node/add</div>
+          <svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" style="position:relative; left:0px; top: -60px;">
+            <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+            <g>
+              <title>Cross out</title>
+              <line stroke="#bf0000" id="svg_2" y2="69" x2="5" y1="5" x1="179" fill-opacity="0" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="none"/>
+            </g>
+          </svg>
+        </div>
+        <div>
+          <div>GET /node/1</div>
+          <div>POST /node</div>
+        </div>
+      </div>
+    </article>
+  </slide>
+
+  <slide style="background-image: url(images/get.png);" class="build">
+    <section class="image-annotation" style="margin-top: 200px;">
+      <dl class="build">
+        <dt>Base Format</dt>
+        <dd>JSON</dd>
+        <dt>URI</dt>
+        <dd>/entity/node/1</dd>
+        <dt>HTTP method</dt>
+        <dd>GET</dd>
+        <dt>Media type</dt>
+        <dd>application/json</dd>
+      </dl>
+    </section>
+  </slide>
+
+  <slide>
+    <section class="image-annotation" style="margin-top: 200px;">
+      <dl>
+        <dt>Base Format</dt>
+        <dd>JSON</dd>
+        <dt>URI</dt>
+        <dd>/entity/node</dd>
+        <dt>HTTP method</dt>
+        <dd>POST</dd>
+        <dt>Media type</dt>
+        <dd>application/hal+json</dd>
+      </dl>
+    </section>
+    <section class="build">
+      <video src="videos/post.mp4" width="100%" style="position: absolute; left: 0px; top:0px;" controls preload="auto">
+        <p>Your browser doesn't support HTML5 video.</p>
+      </video>
+    </section>
+  </slide>
+
+  <slide style="background-image: url(images/richardson-maturity-model.png); background-size: 80%; background-repeat: no-repeat; background-position: 150px">
+    <hgroup>
+      <h2>Richardson Maturity Model</h2>
+    </hgroup>
+    <footer class="source">source: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"></aside>
+    <hgroup class="auto-fadein">
+      <h2>REST in Drupal</h2>
+      <h3>How we implement those standards</h3>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>What are we trying to do?</h2>
+    </hgroup>
+    <article class="bigger">
+      <section>
+        <ul>
+          <li><b>Programmatically</b> getting stuff into and out of Drupal</li>
+          <li>Drupal acts as a web service interface provider</li>
+          <li>Data is exchanged in a <b>machine-readable format</b></li>
+        </ul>
+      </section>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Use cases in Drupal</h2>
+    </hgroup>
+    <article class="api-walkthrough">
+      <section>
+        <img src="images/upcoming-appts.png" alt="iPhone app with upcoming appointments button." />
+      </section>
+      <section>
+        <ul>
+          <li>A <b>mobile phone app</b> retrieves recent news nodes</li>
+          <li><b>On-site Javascript</b> creates taxonomy terms from user input</li>
+          <li><b>Deploying staging content</b> entities to the production site</li>
+          <li>A public <b>REST API</b> that allows clients to place commerce orders</li>
+          <li>A private REST API to <b>migrate</b> third party data into Drupal</li>
+          <li>Connecting Drupal to external systems</li>
+        </ul>
+      </section>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Modules in Drupal 7 contrib: Services</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li><a href="http://drupal.org/project/services">http://drupal.org/project/services</a>
+        <li>Endpoint concept with custom URL paths</li>
+        <li>Caters for RPC and SOAP also</li>
+        <li>Uses drupal_form_submit() for write operations</li>
+        <li>Only covers hard coded entities like nodes, comments, users</li>
+        <li>Explicit authentication info hooks.</li>
+        <li>No hypermedia controls</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Drupal 7 contrib: RESTWS and Services Entity API</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li><b>RESTWS</b> <a href="http://drupal.org/project/restws">http://drupal.org/project/restws</a>
+          <ul>
+            <li>Relies on Entity API and metadata about entities</li>
+            <li>No endpoints: uses /node/1.json or /node/1.xml</li>
+            <li>No configuration: exposes any entity type out of the box</li>
+            <li>Access control on top of Entity API and Field API</li>
+            <li>Standard user authentication over session cookies or HTTP Basic Auth submodule</li>
+          </ul>
+        </li>
+        <li><b>Services Entity API</b> <a href="http://drupal.org/project/services_entity">http://drupal.org/project/services_entity</a>
+          <ul>
+            <li>Combines approaches from Services and RESTWS</li>
+            <li>Configurable endpoints + Entity API for data management</li>
+          </ul>
+        </li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Modules in Drupal 8 core</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>RESTful Web Services (REST module)</li>
+        <li>Serialization module</li>
+        <li>HAL module</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Resources and Operations</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>A resource is the object of interest. Example: the node resource</li>
+        <li>An operation is an action to read or manipulate a resource.
+        </li>
+      </ul>
+      <table>
+        <tr>
+          <th>Operation</th><th>HTTP request method</th><th>path</th>
+        </tr>
+        <tr>
+          <td>Create</td><td>POST</td><td>/entity/node</td>
+        </tr>
+        <tr>
+          <td>Read</td><td>GET</td><td>/entity/node/1</td>
+        </tr>
+        <tr>
+          <td>Update</td><td>PATCH</td><td>/entity/node/1</td>
+        </tr>
+        <tr>
+          <td>Delete</td><td>DELETE</td><td>/entity/node/1</td>
+        </tr>
+      </table>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Entity resource plugins</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>New Entity API with field metadata</li>
+        <li>We know all properties and fields an entity has</li>
+        <li>REST API support can be enabled for any entity known to the system</li>
+        <li>One derivative plugin for each entity type</li>
+        <li>Access control on the entity level</li>
+        <li>Access control on the field level</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Authentication, Authorization and access control</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Authentication is not handled by REST module</li>
+        <li>The global user object has to be populated when the request is received</li>
+        <li>Standard Drupal session cookie authentication in core</li>
+        <li>Extra user permissions to authorize web service operations</li>
+        <li>Additional access control in the resource plugin itself (example: entity and field access in the entity plugin)</li>
+      </ul>
+    </article>
+  </slide>
+
+  <!-- Demonstrations -->
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"></aside>
+    <hgroup class="auto-fadein">
+      <h2>GET Demonstration</h2>
+      <h3>Now configure this for real</h3>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Enabling modules</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Drupal 8 installation
+        <pre>drush si --account-name=klausi --account-pass=secret \
+--site-name=drupal-8.localhost</pre></li>
+        <li>Serialization module (serialization)</li>
+        <li>RESTful Web Services module (rest)</li>
+        <li>HAL (Hypertext Application Language) module (hal)</li>
+        <li><pre>drush en rest hal --yes</pre></li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Enabling the node resource</h2>
+    </hgroup>
+    <article>
+      <ul class="build">
+        <li>Copy <b>rest.settings.yml</b> to the config staging directory</li>
+        <li><pre>cp sites/default/files/config_SNJe.../active/rest.settings.yml \
+sites/default/files/config_SNJe.../staging/rest.settings.yml</pre></li>
+        <li>Edit rest.settings.yml in the config staging directory</li>
+        <li><pre class="prettyprint" data-lang="yaml">
+resources:
+  'entity:node':        # We just enable the node resource alone.
+    GET:                # Enable HTTP GET requests.
+      hal_json: 'TRUE'  # Only the HAL format is enabled.</pre></li>
+        <li>Import the configuration</li>
+        <li><pre>drush config-import --yes # UI: /admin/config/development/sync</pre></li>
+        <li>Clear caches</li>
+        <li><pre>drush cc all # UI: /admin/config/development/performance</pre></li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Configure permissions and add a node</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Go to /admin/people/permissions#module-rest and grant "Access GET on Content resource" to the anonymous user role.</li>
+        <li>Note: node and field access still applies on top of that.</li>
+        <li><pre>drush role-add-perm anonymous 'restful get entity:node'</pre></li>
+        <li>Create a node at /node/add/page</li>
+        <li><pre>git clone --branch 8.x-1.x \
+http://git.drupal.org/project/devel.git modules/devel
+drush en devel_generate --yes
+drush generate-content --types=page 1</pre></li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Fetch the node with cURL</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>With cURL from the command line</li>
+        <li><pre>curl -H "Accept: application/hal+json" --request GET \
+http://drupal-8.localhost/entity/node/1</pre></li>
+        <li>With cURL from PHP</li>
+        <li><pre class="prettyprint" data-lang="php">
+$ch = curl_init();
+curl_setopt_array($ch, array(
+  CURLOPT_URL => 'http://drupal-8.localhost/entity/node/1',
+  CURLOPT_HTTPHEADER => array('Accept: application/hal+json'),
+  CURLOPT_RETURNTRANSFER => TRUE,
+));
+$response = json_decode(curl_exec($ch));
+print_r($response);</pre></li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Fetch the node with Guzzle</h2>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="php">
+use Guzzle\Http\Client;
+
+$client = new Client('http://drupal-8.localhost');
+// If in a Drupal environment use the HTTP client service.
+$client = Drupal::httpClient()->setBaseUrl('http://drupal-8.localhost');
+
+$request = $client->get('entity/node/1');
+$request->addHeader('Accept', 'application/hal+json');
+$response = $request->send()->json();
+print_r($response);</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>The node response</h2>
+    </hgroup>
+    <article>
+      <pre>
+Array(
+  [_links] => Array(
+    [self] => Array(
+      [href] => http://drupal-8.localhost/node/1 )
+    [type] => Array(
+      [href] => http://drupal-8.localhost/rest/type/node/page )
+    ...)
+  [nid] => Array(
+    [0] => Array(
+      [value] => 1 )
+  )
+  ...
+  [body] => Array(
+    [0] => Array(
+      [value] => Camur eu feugiat ...
+      [format] => restricted_html
+      [summary] =>
+)))</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Building lists with Views</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Views is a configurable query builder in Drupal 8 core</li>
+        <li>Display plugin that renders Views data with Serializer</li>
+        <li>Comparable to Views Datasource in Drupal 7 <a href="http://drupal.org/project/views_datasource">http://drupal.org/project/views_datasource</a></li>
+        <li>Support for outputting whole entities</li>
+        <li>Show only selected fields for one entity item</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"></aside>
+    <hgroup class="auto-fadein">
+      <h2>POST Demonstration</h2>
+      <h3>Writing new nodes</h3>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Enable POST configuration</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Edit rest.settings.yml in the config staging directory and import it as usual:</li>
+        <li><pre class="prettyprint" data-lang="yaml">
+resources:
+  'entity:node':
+    GET:
+      hal_json: 'TRUE'
+    POST:
+      hal_json: 'TRUE'</pre></li>
+        <li>Grant the "Access POST on Content resource" to the administrator user role.</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Obtaining a session with Guzzle</h2>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="php">
+use Guzzle\Http\Client;
+use Guzzle\Plugin\Cookie\CookiePlugin;
+use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
+
+$cookiePlugin = new CookiePlugin(new ArrayCookieJar());
+
+$client = new Client('http://drupal-8.localhost');
+$client->addSubscriber($cookiePlugin);
+$client->post('user', null, array(
+  'name' => 'klausi',
+  'pass' => 'secret',
+  'form_id' => 'user_login_form',
+))->send();
+// $client holds a session cookie now. All future $client requests
+// will send the cookie along</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>POSTing a node with Guzzle</h2>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="php">
+// Extra GET request to retrieve the CSRF protection token.
+$token = $client->get('rest/session/token')->send()->getBody(TRUE);
+
+$node = array(
+  '_links' => array(
+    'type' => array(
+      'href' => 'http://drupal-8.localhost/rest/type/node/page'
+    )
+  ),
+  'title' => array(0 => array('value' => 'New node title')),
+);
+$data = json_encode($node);
+
+$client->post('entity/node', array(
+  'Content-type' => 'application/hal+json',
+  'X-CSRF-Token' => $token,
+), $data)->send();</pre>
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"></aside>
+    <hgroup class="auto-fadein">
+      <h2>Resource plugins</h2>
+      <h3>Let's take a look inside</h3>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Resource plugins</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Separation of data handling and serialization</li>
+        <li>Classes where specially named methods correspond to HTTP methods</li>
+        <li>One entity plugin with derivatives for all entity types</li>
+        <li>Contributed modules can easily override/extend/provide plugins</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Dblog resource plugin example</h2>
+    </hgroup>
+    <article>
+      <p>GET http://example.com/dblog/1</p>
+      <pre class="prettyprint" data-lang="php">
+/**
+ * @Plugin(id = "dblog")
+ */
+class DBLogResource extends ResourceBase {
+  public function get($id = NULL) {
+    if ($id) {
+      $record = db_query("SELECT * FROM {watchdog} WHERE wid = :wid",
+        array(':wid' => $id))
+        ->fetchAssoc();
+      if (!empty($record)) {
+        return new ResourceResponse($record);
+      }
+}}}
+      </pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Request method mapping example</h2>
+    </hgroup>
+    <article>
+      <p><span class="mark">GET</span> http://example.com/dblog/1</p>
+      <pre class="prettyprint" data-lang="php">
+/**
+ * @Plugin(id = "dblog")
+ */
+class DBLogResource extends ResourceBase {
+  public function <span class="mark">get</span>($id = NULL) {
+    if ($id) {
+      $record = db_query("SELECT * FROM {watchdog} WHERE wid = :wid",
+        array(':wid' => $id))
+        ->fetchAssoc();
+      if (!empty($record)) {
+        return new ResourceResponse($record);
+      }
+}}}
+      </pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Plugin mapping example</h2>
+    </hgroup>
+    <article>
+      <p>GET http://example.com/<span class="mark">dblog</span>/1</p>
+      <pre class="prettyprint" data-lang="php">
+/**
+ * @Plugin(id = "<span class="mark">dblog</span>")
+ */
+class DBLogResource extends ResourceBase {
+  public function get($id = NULL) {
+    if ($id) {
+      $record = db_query("SELECT * FROM {watchdog} WHERE wid = :wid",
+        array(':wid' => $id))
+        ->fetchAssoc();
+      if (!empty($record)) {
+        return new ResourceResponse($record);
+      }
+}}}
+      </pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>ID mapping example</h2>
+    </hgroup>
+    <article>
+      <p>GET http://example.com/dblog/<span class="mark">1</span></p>
+      <pre class="prettyprint" data-lang="php">
+/**
+ * @Plugin(id = "dblog")
+ */
+class DBLogResource extends ResourceBase {
+  public function get(<span class="mark">$id</span> = NULL) {
+    if ($id) {
+      $record = db_query("SELECT * FROM {watchdog} WHERE wid = :wid",
+        array(':wid' => <span class="mark">$id</span>))
+        ->fetchAssoc();
+      if (!empty($record)) {
+        return new ResourceResponse($record);
+      }
+}}}
+      </pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Dblog response HAL example</h2>
+    </hgroup>
+    <article>
+      <p>GET http://example.com/dblog/1 Accept: application/hal+json</p>
+      <pre class="prettyprint" data-lang="json">
+{
+  "wid": "1",
+  "uid": "0",
+  "type": "system",
+  "message": "%module module installed.",
+  "variables": "a:1:{s:7:\"%module\";s:5:\"dblog\";}",
+  "severity": "6",
+  "link": "",
+  "location": "http://drupal-8.localhost/core/install.php?langcode=en&profile=standard&id=1&op=do_nojs&op=do",
+  "referer": "http://drupal-8.localhost/core/install.php?langcode=en&profile=standard&op=start&id=1",
+  "hostname": "127.0.0.1",
+  "timestamp": "1367615996"
+}
+      </pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Dblog response XML example</h2>
+    </hgroup>
+    <article>
+      <p>GET http://example.com/dblog/1 Accept: application/xml</p>
+      <pre class="prettyprint" data-lang="xml">
+&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;response&gt;
+  &lt;wid&gt;1&lt;/wid&gt;
+  &lt;uid&gt;0&lt;/uid&gt;
+  &lt;type&gt;system&lt;/type&gt;
+  &lt;message&gt;%module module installed.&lt;/message&gt;
+  &lt;variables&gt;a:1:{s:7:&quot;%module&quot;;s:5:&quot;dblog&quot;;}&lt;/variables&gt;
+  &lt;severity&gt;6&lt;/severity&gt;
+  &lt;link&gt;&lt;/link&gt;
+  &lt;location&gt;
+  &lt;![CDATA[http://drupal-8.localhost/core/install.php?langcode=en&amp;profile=standard&amp;id=1&amp;op=do_nojs&amp;op=do]]&gt;
+  &lt;/location&gt;
+  &lt;referer&gt;
+  &lt;![CDATA[http://drupal-8.localhost/core/install.php?langcode=en&amp;profile=standard&amp;op=start&amp;id=1]]&gt;
+  &lt;/referer&gt;
+  &lt;hostname&gt;127.0.0.1&lt;/hostname&gt;
+  &lt;timestamp&gt;1367615996&lt;/timestamp&gt;
+&lt;/response&gt;
+      </pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>REST request pipeline</h2>
+    </hgroup>
+    <article>
+      <img src="images/rest_pipeline.svg">
+    </article>
+  </slide>
+
+  <!--<slide>
+    <hgroup>
+      <h2>Endpoints</h2>
+    </hgroup>
+    <section class="flexbox vcenter">
+      <blockquote class="twitter-tweet"><p>WTF is a "REST endpoint"? <a href="https://t.co/TLGFUWEQPM" title="https://developers.google.com/glass/overview">developers.google.com/glass/overview</a></p>&mdash; Roy T. Fielding (@fielding) <a href="https://twitter.com/fielding/status/324448353180061696">April 17, 2013</a></blockquote>
+      <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </section>
+  </slide>-->
+
+  <!-- Serialization -->
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"></aside>
+    <hgroup class="auto-fadein">
+      <h2>Serialization</h2>
+      <h3>Getting things to JSON (et al) and back again</h3>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Formats in core</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>JSON</li>
+        <li>XML (kinda)</li>
+        <li>Hypermedia Application Language (HAL) JSON</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Symfony Serializer</h2>
+    </hgroup>
+    <article class="build">
+      <pre>$serializer->serialize($object, $format, $context)</pre>
+      <img src="images/serialize-process.png" width="100%" alt="Serializer workflow from object to array using Normalizer::normalize, and from array to string using Encoder::encode."/>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Fine grained control</h2>
+    </hgroup>
+    <article class="build">
+      <svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:se="http://svg-edit.googlecode.com">
+        <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+        <g>
+          <title>Layer 1</title>
+          <polyline se:connector="svg_3 svg_8" fill="none" stroke-width="3" stroke="#999999" points="82,117.45491027832031 147.97955322265625,141.43057250976562 213.95912170410156,165.40625" id="svg_26"/>
+          <polyline se:connector="svg_3 svg_19" fill="none" stroke-width="3" stroke="#999999" points="72.80986785888672,120.921875 152.25,211.1640625 231.69012451171875,301.40625" id="svg_25"/>
+          <polyline se:connector="svg_3 svg_16" fill="none" stroke-width="3" stroke="#999999" points="77.60320281982422,120.921875 141.88124084472656,168.2109375 206.15928649902344,215.5" id="svg_24"/>
+          <polyline se:connector="svg_1 svg_4" fill="none" stroke-width="3" stroke="#999999" points="126,110.47309112548828 152.25,110.25 178.5,110.02690887451172" id="svg_21"/>
+          <polyline fill="none" stroke="#000000" stroke-width="5" stroke-linecap="round" opacity="0.5" points="539,234 " id="svg_9"/>
+          <polyline fill="none" stroke="#000000" stroke-width="5" stroke-linecap="round" opacity="0.5" points="584,257 " id="svg_10"/>
+          <rect fill="#FF0000" stroke="#000000" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" opacity="0.5" x="528" y="241" width="0" height="0" id="svg_11"/>
+          <rect fill="#FF0000" stroke="#000000" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" opacity="0.5" x="443" y="182" width="0" height="0" id="svg_12"/>
+          <ellipse fill="#FF0000" stroke="#000000" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" opacity="0.5" cx="487" cy="229" id="svg_13"/>
+          <ellipse fill="#FF0000" stroke="#000000" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" opacity="0.5" cx="688" cy="346" id="svg_14"/>
+          <ellipse fill="#FF0000" stroke="#000000" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" opacity="0.5" cx="687" cy="341" id="svg_15"/>
+          <ellipse stroke="#e4e4e4" ry="26" rx="62" id="svg_1" cy="111" cx="64" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" fill="#f0f0f0"/>
+          <text xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="17" id="svg_3" y="117" x="64" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#000000" fill="#949494">node</text>
+          <ellipse id="svg_4" stroke="#e4e4e4" ry="26" rx="62" cy="109.5" cx="240.5" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" fill="#f0f0f0"/>
+          <text id="svg_5" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="17" y="115.5" x="240.5" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#000000" fill="#949494">text</text>
+          <ellipse id="svg_7" stroke="#e4e4e4" ry="26" rx="62" cy="175.5" cx="241.5" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" fill="#f0f0f0"/>
+          <text id="svg_8" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="17" y="181.5" x="241.5" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#000000" fill="#949494">text_long</text>
+          <ellipse id="svg_16" stroke="#e4e4e4" ry="26" rx="62" cy="241.5" cx="241.5" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" fill="#f0f0f0"/>
+          <text id="svg_17" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="17" y="247.5" x="241.5" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#000000" fill="#949494">image</text>
+          <ellipse stroke="#e4e4e4" id="svg_18" ry="26" rx="121.5" cy="310.5" cx="239.99999" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" fill="#f0f0f0"/>
+          <text id="svg_19" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="17" y="317.5" x="240.5" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#000000" fill="#949494">taxonomy_term_reference</text>
+        </g>
+      </svg>
+      <div>
+        <div>
+          <pre class="prettyprint image-annotation" data-lang="json" style="position: absolute; top: 200px; left: 440px;">
+  {
+  ...
+    "field_image": 5,
+  ...
+  }</pre>
+        </div>
+        <div style="position: absolute; z-index: 1000; top:130px;">
+          <svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:se="http://svg-edit.googlecode.com">
+            <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+            <g>
+              <title>Node graph</title>
+              <ellipse id="svg_16" stroke="#e4e4e4" ry="26" rx="62" cy="241.5" cx="241.5" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" fill="lightblue"/>
+              <text id="svg_17" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="17" y="247.5" x="241.5" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#000000" fill="#949494">image</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+      <div>
+        <pre class="prettyprint image-annotation" data-lang="json" style="position: absolute; top: 400px; left: 440px;">
+{
+...
+  "field_image": "files/foo.png",
+...
+}</pre>
+      </div>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Normalizers</h2>
+      <h3>Chain of responsibility</h3>
+    </hgroup>
+    <article class="smaller build fade">
+      <div class="normalizer" style="margin-top:100px;">
+        EntityReferenceItemNormalizer
+      </div>
+      <div class="normalizer">
+        FieldItemNormalizer
+      </div>
+      <div class="normalizer">
+        FieldNormalizer
+      </div>
+      <div class="normalizer">
+        EntityNormalizer
+      </div>
+      <pre>
+$object is instance of Drupal\image\Type\ImageItem
+$format is 'json'
+</pre>
+      <div class="supportsNormalization label" style="top:230px">
+        <div>
+          supportsNormalization($object, $format)
+          <img src="images/arrow.png" />
+        </div>
+        <span style="color:red">FALSE</span>
+      </div>
+      <div class="supportsNormalization label" style="top:320px">
+        <div>
+          supportsNormalization($object, $format)
+          <img src="images/arrow.png" />
+        </div>
+        <span style="color:green">TRUE</span>
+      </div>
+      <div class="normalizer" style="position: absolute; top:160px">
+        ImageItemNormalizer
+      </div>
+      <div class="supportsNormalization label" style="top:150px">
+        <div>
+          supportsNormalization($object, $format)
+          <img src="images/arrow.png" />
+        </div>
+        <span style="color:green">TRUE</span>
+      </div>
+    </article>
+  </slide>
+
+  <!-- Serialization -->
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"></aside>
+    <hgroup class="auto-fadein">
+      <h2>What's next?</h2>
+      <h3>Getting to Level 3</h3>
+    </hgroup>
+  </slide>
+
+  <slide style="background-image: url(images/richardson-maturity-model.png); background-size: 80%; background-repeat: no-repeat; background-position: 150px">
+    <hgroup>
+      <h2>Richardson Maturity Model</h2>
+    </hgroup>
+    <section>
+      <svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" style="position:absolute; top:200px; left:360px;">
+        <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+        <g>
+          <title>Layer 1</title>
+          <ellipse stroke="#bf0000" ry="38" rx="208.50001" id="svg_1" cy="65" cx="221.50001" fill-opacity="0" stroke-width="5" fill="#000000"/>
+        </g>
+      </svg>
+    </section>
+    <footer class="source">source: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Making a doctor's appointment via API</h2>
+    </hgroup>
+    <article class="api-walkthrough">
+      <section>
+        <img src="images/upcoming-appts.png" alt="iPhone app with upcoming appointments button." />
+      </section>
+      <section class="build">
+        <div>Get a list of open slots in the schedule</div>
+        <pre class="prettyprint" data-lang="http">
+GET /doctors/slots HTTP/1.1
+Accept: application/hal+json
+Host: med.org</pre>
+      </section>
+      <footer class="source">based on: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
+    </article>
+  </slide>
+
+  <slide>
+    <article class="api-walkthrough">
+      <section>
+        <img src="images/list-appts.png" alt="iPhone app with list of appointments." />
+      </section>
+      <section class="build">
+        <div>Server returns list of open appointments</div>
+  <pre class="prettyprint" data-lang="http">
+HTTP/1.1 200 OK
+Content-Type: application/hal+json</pre>
+  <pre class="prettyprint" data-lang="json">
+{
+  ...
+  "_embedded": {
+    "http://med.org/rels/open-slots": [
+      {
+        "_links": {
+          "self": { "href": "/slots/97" },
+          "http://med.org/rels/book": {
+            "href": "/slots/97"
+          }
+        }
+        "id": 97,
+        "doctor": "Dr. Doe",
+        "start": 2013-05-23T16:00:00,
+        "end": 2013-05-23T16:50:00
+      },
+      ...
+    ]
+  }
+}</pre>
+      </section>
+    </article>
+  </slide>
+
+  <slide>
+    <article class="api-walkthrough">
+      <section>
+        <img src="images/choose-appt.png" alt="iPhone app with chosen appointment." />
+      </section>
+      <section class="build">
+        <div>Client chooses the appointment and POSTs to the booking URI</div>
+  <pre class="prettyprint" data-lang="http">
+POST /slots/97 HTTP/1.1
+Content-Type: application/hal+json</pre>
+  <pre class="prettyprint" data-lang="json">
+{
+  "_links": {
+    "http://med.org/rels/patient": {
+      "href": "/patients/linclark"
+    }
+  }
+}</pre>
+      </section>
+      <footer class="source">based on: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
+    </article>
+  </slide>
+
+  <slide>
+    <article class="api-walkthrough">
+      <section>
+        <img src="images/created-appt.png" alt="iPhone app with created appointment." />
+      </section>
+      <section class="build">
+        <div>Server returns confirmation</div>
+        <pre class="prettyprint" data-lang="http">
+HTTP/1.1 201 Created
+Location: http://.../slots/97/appointment</pre>
+        <div>...and links that tell the client what it can do next</div>
+    <pre class="prettyprint" data-lang="json">
+{
+  "_links": {
+    "self": {
+      "href": "/slots/97/appointment"
+    },
+    "http://med.org/rels/patient": {
+      "href": "/patients/linclark"
+    },
+    "http://med.org/rels/cancel": {
+      "href": "/slots/97/appointment"
+    }
+    ...
+  }
+}</pre>
+        <footer class="source">based on: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
+      </section>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>2 benefits of hypermedia</h2>
+    </hgroup>
+    <article class="build">
+      <blockquote>it allows the server to change its URI scheme without breaking clients</blockquote>
+      <div>...aka decoupling</div>
+      <blockquote>it helps client developers explore the protocol</blockquote>
+      <div>...aka discoverability</div>
+      <footer class="source">source: <a href="http://martinfowler.com/articles/richardsonMaturityModel.html">Martin Fowler</a></footer>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Decoupling</h2>
+    </hgroup>
+    <article>
+Hard-coded:
+<pre class="prettyprint" data-lang="php">
+$cancel_url = $base . '/slots/' . $appt['id'] . '/appointment';
+</pre>
+Using link relations:
+<pre class="prettyprint" data-lang="php">
+$cancel_url = $appt['http://med.org/rels/cancel']['uri'];
+</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Discoverability</h2>
+    </hgroup>
+    <article class="api-walkthrough build">
+      <section>
+        <img src="images/discoverability-base.png" alt="iPhone app with created appointment." />
+      </section>
+      <section>
+        <ul class="build">
+          <li>http://med.org/rels/patient</li>
+          <li>http://med.org/rels/cancel</li>
+          <li>http://med.org/rels/add-symptom</li>
+        </ul>
+      </section>
+      <img src="images/discoverability.png" style="position: absolute; top:328px; left:637px; width: 172px;" />
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Hypermedia in Drupal</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Entity reference, etc</li>
+        <li>Entity management links?</li>
+        <li>Views pagination?</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/drupalcon_pdx_icon_2.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>Questions?</h2>
+      <p>What did you think? Evaluate this session at: portland2013.drupal.org/schedule</p>
+    </article>
+    <p class="auto-fadein" data-config-contact>
+      <!-- populated from slide_config.json -->
+    </p>
+  </slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<script>
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-XXXXXXXX-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
+
