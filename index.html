@@ -192,7 +192,8 @@ to other resources.
           </svg>
         </div>
         <div>
-          Accept: application/json
+          <div>Accept: application/json</div>
+          <div>Content-Type: application/json</div>
         </div>
       </div>
     </article>
@@ -475,7 +476,8 @@ sites/default/files/config_SNJe.../staging/</pre></li>
 resources:
   'entity:node':        # We just enable the node resource alone.
     GET:                # Enable HTTP GET requests.
-      hal_json: 'TRUE'  # Only the HAL format is enabled.</pre></li>
+      supported_formats:
+        - hal_json      # Only the HAL format is enabled.</pre></li>
         <li>Sync the configuration at admin/config/development/sync</li>
         <li>Clear caches</li>
         <li><pre>drush cc all # UI: /admin/config/development/performance</pre></li>
@@ -693,7 +695,8 @@ resources:
       supported_formats:
         - hal_json
     POST:
-      hal_json: 'TRUE'</pre></li>
+      supported_formats:
+        - hal_json</pre></li>
         <li>Grant the "Access POST on Content resource" to the administrator user role.</li>
       </ul>
     </article>
@@ -950,7 +953,7 @@ class DBLogResource extends ResourceBase {
 
   <slide>
     <hgroup>
-      <h2>Formats in core</h2>
+      <h2>Media types in core</h2>
     </hgroup>
     <article>
       <ul>
