@@ -428,8 +428,13 @@ to other resources.
     <article>
       <ul>
         <li>Authentication is not handled by REST module</li>
-        <li>The global user object has to be populated when the request is received</li>
-        <li>Standard Drupal session cookie authentication in core</li>
+        <li>The account object has to be added to the request</li>
+        <li>Pluggable authentication with two implementations in core:
+            <ul>
+                <li>Standard Drupal session cookie</li>
+                <li>Basic HTTP Authentication</li>
+            </ul>
+        </li>
         <li>Extra user permissions to authorize web service operations</li>
         <li>Additional access control in the resource plugin itself (example: entity and field access in the entity plugin)</li>
       </ul>
@@ -704,37 +709,10 @@ resources:
 
   <slide>
     <hgroup>
-      <h2>Obtaining a session with Guzzle</h2>
-    </hgroup>
-    <article>
-      <pre class="prettyprint" data-lang="php">
-use Guzzle\Http\Client;
-use Guzzle\Plugin\Cookie\CookiePlugin;
-use Guzzle\Plugin\Cookie\CookieJar\ArrayCookieJar;
-
-$cookiePlugin = new CookiePlugin(new ArrayCookieJar());
-
-$client = new Client('http://drupal-8.localhost');
-$client->addSubscriber($cookiePlugin);
-$client->post('user', null, array(
-  'name' => 'klausi',
-  'pass' => 'secret',
-  'form_id' => 'user_login_form',
-))->send();
-// $client holds a session cookie now. All future $client requests
-// will send the cookie along</pre>
-    </article>
-  </slide>
-
-  <slide>
-    <hgroup>
       <h2>POSTing a node with Guzzle</h2>
     </hgroup>
     <article>
       <pre class="prettyprint" data-lang="php">
-// Extra GET request to retrieve the CSRF protection token.
-$token = $client->get('rest/session/token')->send()->getBody(TRUE);
-
 $node = array(
   '_links' => array(
     'type' => array(
@@ -747,7 +725,8 @@ $data = json_encode($node);
 
 $client->post('entity/node', array(
   'Content-type' => 'application/hal+json',
-  'X-CSRF-Token' => $token,
+  // The credentials, in the format $username:$password, are base64 encoded.
+  'Authorization' => 'Basic YWRtaW46M280UWJRdVNQeQ==',
 ), $data)->send();</pre>
     </article>
   </slide>
