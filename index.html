@@ -751,7 +751,6 @@ $node = array(
   'title' => array(0 => array('value' => 'New node title')),
 );
 $data = json_encode($node);
-
 $ch = curl_init();
 curl_setopt_array($ch, array(
   CURLOPT_URL => 'http://drupal-8.localhost/entity/node',
