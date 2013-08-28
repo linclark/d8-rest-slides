@@ -722,6 +722,51 @@ resources:
 
   <slide>
     <hgroup>
+      <h2>POSTing a node with cURL</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>With cURL from the command line</li>
+        <li><pre>curl --include --request POST --user klausi:secret \
+--header 'Content-type: application/hal+json' \
+http://drupal-8.localhost/entity/node --data-binary \
+'{"_links":{"type":{"href":"http://drupal-8.localhost/rest/type/node/page"}}, \
+"title":[{"value":"test title"}]}'</pre></li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>POSTing a node with PHP cURL</h2>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="php">
+$node = array(
+  '_links' => array(
+    'type' => array(
+      'href' => 'http://drupal-8.localhost/rest/type/node/page'
+    )
+  ),
+  'title' => array(0 => array('value' => 'New node title')),
+);
+$data = json_encode($node);
+
+$ch = curl_init();
+curl_setopt_array($ch, array(
+  CURLOPT_URL => 'http://drupal-8.localhost/entity/node',
+  CURLOPT_HTTPHEADER => array('Content-type: application/hal+json'),
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => $data,
+  CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
+  CURLOPT_USERPWD => 'klausi:secret',
+));
+curl_exec($ch);</pre>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
       <h2>POSTing a node with Guzzle</h2>
     </hgroup>
     <article>
