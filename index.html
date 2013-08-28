@@ -715,7 +715,7 @@ resources:
         - hal_json
       supported_auth:
         - http_basic</pre></li>
-        <li>Grant the "Access POST on Content resource" to the administrator user role.</li>
+        <li>Grant the "Access POST on Content resource" to the administrator user role. Clear chaches!</li>
       </ul>
     </article>
   </slide>
@@ -737,10 +737,11 @@ $node = array(
 $data = json_encode($node);
 
 $client->post('entity/node', array(
-  'Content-type' => 'application/hal+json',
-  // The credentials, in the format $username:$password, are base64 encoded.
-  'Authorization' => 'Basic YWRtaW46M280UWJRdVNQeQ==',
-), $data)->send();</pre>
+    'Content-type' => 'application/hal+json',
+  ), $data)
+  // Username and password for HTTP Basic Authentication.
+  ->setAuth('klausi', 'secret')
+  ->send();</pre>
     </article>
   </slide>
 
