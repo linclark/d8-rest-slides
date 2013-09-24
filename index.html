@@ -32,7 +32,7 @@ URL: https://code.google.com/p/io-2012-slides
   <!-- Presenter Introduction -->
 
   <slide class="title-slide segue nobackground">
-    <aside class="gdbar"><img src="images/logo-drupal-camp-nyc-eyes.png"></aside>
+    <aside class="gdbar"><img src="images/prague_logo_inline.png"></aside>
     <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
     <hgroup class="auto-fadein">
       <h1 data-config-title><!-- populated from slide_config.json --></h1>
@@ -434,11 +434,12 @@ to other resources.
     <article>
       <ul>
         <li>Authentication is not handled by REST module</li>
-        <li>The user session has to be added to the request</li>
-        <li>Pluggable authentication with two implementations in core:
+        <li>AuthenticationProviderInterface in Drupal core</li>
+        <li>Pluggable authentication providers:
             <ul>
-                <li>Standard Drupal session cookie</li>
-                <li>Basic HTTP Authentication</li>
+                <li>Standard Drupal session cookie (Drupal core)</li>
+                <li>Basic HTTP Authentication (Drupal core)</li>
+                <li>OAuth (Contrib)</li>
             </ul>
         </li>
         <li>Extra user permissions to authorize web service operations</li>
@@ -479,7 +480,7 @@ to other resources.
     </hgroup>
     <article>
       <ul class="build">
-        <li>Copy files in active config to the config staging directory</li>
+        <li>Copy all files in active config to the config staging directory</li>
         <li><pre>cp sites/default/files/config_SNJe.../active/* \
 sites/default/files/config_SNJe.../staging/</pre></li>
         <li>Edit rest.settings.yml in the config staging directory</li>
@@ -488,7 +489,9 @@ resources:
   'entity:node':        # We just enable the node resource alone.
     GET:                # Enable HTTP GET requests.
       supported_formats:
-        - hal_json      # Only the HAL format is enabled.</pre></li>
+        - hal_json      # Only the HAL format is enabled.
+      supported_auth:
+        - http_basic    # Only HTTP Basic auth is enabled.</pre></li>
         <li>Sync the configuration at admin/config/development/sync</li>
         <li>Clear caches</li>
         <li><pre>drush cc all # UI: /admin/config/development/performance</pre></li>
@@ -705,11 +708,59 @@ resources:
     GET:
       supported_formats:
         - hal_json
+      supported_auth:
+        - http_basic
     POST:
       supported_formats:
-        - hal_json</pre></li>
-        <li>Grant the "Access POST on Content resource" to the administrator user role.</li>
+        - hal_json
+      supported_auth:
+        - http_basic</pre></li>
+        <li>Grant the "Access POST on Content resource" to the administrator user role. Clear chaches!</li>
       </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>POSTing a node with cURL</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>With cURL from the command line</li>
+        <li><pre>curl --include --request POST --user klausi:secret \
+--header 'Content-type: application/hal+json' \
+http://drupal-8.localhost/entity/node --data-binary \
+'{"_links":{"type":{"href":"http://drupal-8.localhost/rest/type/node/page"}}, \
+"title":[{"value":"test title"}]}'</pre></li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>POSTing a node with PHP cURL</h2>
+    </hgroup>
+    <article>
+      <pre class="prettyprint" data-lang="php">
+$node = array(
+  '_links' => array(
+    'type' => array(
+      'href' => 'http://drupal-8.localhost/rest/type/node/page'
+    )
+  ),
+  'title' => array(0 => array('value' => 'New node title')),
+);
+$data = json_encode($node);
+$ch = curl_init();
+curl_setopt_array($ch, array(
+  CURLOPT_URL => 'http://drupal-8.localhost/entity/node',
+  CURLOPT_HTTPHEADER => array('Content-type: application/hal+json'),
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => $data,
+  CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
+  CURLOPT_USERPWD => 'klausi:secret',
+));
+curl_exec($ch);</pre>
     </article>
   </slide>
 
@@ -730,10 +781,11 @@ $node = array(
 $data = json_encode($node);
 
 $client->post('entity/node', array(
-  'Content-type' => 'application/hal+json',
-  // The credentials, in the format $username:$password, are base64 encoded.
-  'Authorization' => 'Basic YWRtaW46M280UWJRdVNQeQ==',
-), $data)->send();</pre>
+    'Content-type' => 'application/hal+json',
+  ), $data)
+  // Username and password for HTTP Basic Authentication.
+  ->setAuth('klausi', 'secret')
+  ->send();</pre>
     </article>
   </slide>
 
@@ -1266,9 +1318,23 @@ $cancel_url = $appt['http://med.org/rels/cancel']['uri'];
   </slide>
 
   <slide class="thank-you-slide segue nobackground">
-    <aside class="gdbar right"><img src="images/logo-drupal-camp-nyc-eyes.png"></aside>
+    <aside class="gdbar right"><img src="images/prague_logo_inline.png"></aside>
     <article class="flexbox vleft auto-fadein">
       <h2>Questions?</h2>
+    </article>
+    <p class="auto-fadein" data-config-contact>
+      <!-- populated from slide_config.json -->
+    </p>
+  </slide>
+
+  <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/prague_logo_inline.png"></aside>
+    <article class="flexbox vleft auto-fadein bigger">
+      <h2>What did you think?</h2>
+      <p>Locate this session at the DrupalCon Prague
+        website: http://prague2013.drupal.org/schedule</p>
+      <p>Click the "Take the survey" link</p>
+      <p>Thank you!</p>
     </article>
     <p class="auto-fadein" data-config-contact>
       <!-- populated from slide_config.json -->
