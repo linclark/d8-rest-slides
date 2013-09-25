@@ -20,7 +20,7 @@ var SLIDE_CONFIG = {
   // Author information
   presenters: [{
     name: 'Lin Clark',
-    company: 'Independent developer',
+    company: 'Senior Performance Engineer, Tag1 Consulting',
     twitter: '@linclark',
     www: 'http://lin-clark.com',
     github: 'http://github.com/linclark'
