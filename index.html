@@ -377,6 +377,7 @@ to other resources.
         <li>RESTful Web Services (REST module)</li>
         <li>Serialization module</li>
         <li>HAL module</li>
+        <li>HTTP Basic Authentication module</li>
       </ul>
     </article>
   </slide>
@@ -408,6 +409,7 @@ to other resources.
           <td>Delete</td><td>DELETE</td><td>/entity/node/1</td>
         </tr>
       </table>
+      <p>We try to fix the paths to /node/1 at the code sprint on Friday!</p>
     </article>
   </slide>
 
@@ -419,7 +421,7 @@ to other resources.
       <ul>
         <li>New Entity API with field metadata</li>
         <li>We know all properties and fields an entity has</li>
-        <li>REST API support can be enabled for any entity known to the system</li>
+        <li>REST API support can be enabled for any content entity known to the system</li>
         <li>One derivative plugin for each entity type</li>
         <li>Access control on the entity level</li>
         <li>Access control on the field level</li>
@@ -463,13 +465,15 @@ to other resources.
     </hgroup>
     <article>
       <ul>
+        <li><a href="https://drupal.org/documentation/modules/rest">https://drupal.org/documentation/modules/rest</a></li>
         <li>Drupal 8 installation
         <pre>drush si --account-name=klausi --account-pass=secret \
 --site-name=drupal-8.localhost</pre></li>
         <li>Serialization module (serialization)</li>
         <li>RESTful Web Services module (rest)</li>
         <li>HAL (Hypertext Application Language) module (hal)</li>
-        <li><pre>drush en rest hal --yes</pre></li>
+        <li>HTTP Basic Authentication module (basic_auth)</li>
+        <li><pre>drush en rest hal basic_auth--yes</pre></li>
       </ul>
     </article>
   </slide>
@@ -996,7 +1000,7 @@ class DBLogResource extends ResourceBase {
       <ul>
         <li>JSON</li>
         <li>XML (kinda)</li>
-        <li>Hypermedia Application Language (HAL) JSON</li>
+        <li>Hypertext Application Language (HAL) JSON</li>
       </ul>
     </article>
   </slide>
@@ -1331,8 +1335,7 @@ $cancel_url = $appt['http://med.org/rels/cancel']['uri'];
     <aside class="gdbar right"><img src="images/prague_logo_inline.png"></aside>
     <article class="flexbox vleft auto-fadein bigger">
       <h2>What did you think?</h2>
-      <p>Locate this session at the DrupalCon Prague
-        website: http://prague2013.drupal.org/schedule</p>
+      <p>Locate this session at http://prague2013.drupal.org/schedule</p>
       <p>Click the "Take the survey" link</p>
       <p>Thank you!</p>
     </article>
