@@ -409,6 +409,7 @@ to other resources.
           <td>Delete</td><td>DELETE</td><td>/entity/node/1</td>
         </tr>
       </table>
+      <p>We try to fix the paths to /node/1 at the code sprint on Friday!</p>
     </article>
   </slide>
 
@@ -420,7 +421,7 @@ to other resources.
       <ul>
         <li>New Entity API with field metadata</li>
         <li>We know all properties and fields an entity has</li>
-        <li>REST API support can be enabled for any entity known to the system</li>
+        <li>REST API support can be enabled for any content entity known to the system</li>
         <li>One derivative plugin for each entity type</li>
         <li>Access control on the entity level</li>
         <li>Access control on the field level</li>
@@ -470,7 +471,8 @@ to other resources.
         <li>Serialization module (serialization)</li>
         <li>RESTful Web Services module (rest)</li>
         <li>HAL (Hypertext Application Language) module (hal)</li>
-        <li><pre>drush en rest hal --yes</pre></li>
+        <li>HTTP Basic Authentication module (basic_auth)</li>
+        <li><pre>drush en rest hal basic_auth--yes</pre></li>
       </ul>
     </article>
   </slide>
